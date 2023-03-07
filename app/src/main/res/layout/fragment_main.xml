@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainFragment"
+    android:orientation="vertical"
+    android:layout_margin="10dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginStart="10dp"
+    android:padding="10dp">
+
+<!--    notes -->
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/notes_mainFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="2dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal"
+        android:clickable="true">
+        <ImageView
+            android:id="@+id/notes_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="3dp"
+            android:src="@drawable/ic_round_sticky_note_2_24"/>
+        <TextView
+            android:id="@+id/notes_textLink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:paddingVertical="7dp"
+            android:clickable="true"
+            android:textColor="@color/black"
+            android:layout_marginStart="9dp"
+            android:text="@string/notes"/>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+<!--    bookmark -->
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/bookmark_mainFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:clickable="true"
+        android:orientation="horizontal"
+        android:padding="2dp">
+
+        <ImageView
+            android:id="@+id/bookmark_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="3dp"
+            android:src="@drawable/ic_baseline_collections_bookmark_24" />
+
+        <TextView
+            android:id="@+id/bookmark_textLink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/bookmark"
+            android:textColor="@color/black"
+            android:clickable="true"
+            android:textSize="20sp"
+            android:paddingVertical="7dp"
+            android:layout_marginStart="5dp" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+<!--    history -->
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/history_mainFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="2dp"
+        android:layout_marginBottom="5dp"
+        android:orientation="horizontal"
+        android:clickable="true">
+        <ImageView
+            android:id="@+id/history_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="3dp"
+            android:src="@drawable/ic_baseline_history_24"/>
+        <TextView
+            android:id="@+id/history_textLink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:clickable="true"
+            android:textColor="@color/black"
+            android:paddingVertical="7dp"
+            android:layout_marginStart="5dp"
+            android:text="@string/history"/>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+<!--    exit -->
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/exit_mainFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="2dp"
+        android:layout_marginBottom="5dp"
+        android:orientation="horizontal"
+        android:clickable="true">
+        <ImageView
+            android:id="@+id/exit_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="3dp"
+            android:src="@drawable/ic_baseline_highlight_off_24"/>
+        <TextView
+            android:id="@+id/exit_textLink"
+            android:textColor="@color/black"
+            android:textColorLink="@color/button_focused"
+            android:textColorHint="@color/button_pressed"
+            android:textColorHighlight="@color/button_pressed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:paddingVertical="7dp"
+            android:layout_marginStart="5dp"
+            android:text="@string/exit"
+            android:clickable="true" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</LinearLayout>

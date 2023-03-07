@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/notes_menuItem"
+            android:icon="@android:drawable/stat_notify_chat"
+            android:title="@string/notes"
+            android:iconTint="@color/black"/>
+        <item
+            android:id="@+id/history_menuItem"
+            android:icon="@android:drawable/ic_menu_recent_history"
+            android:title="@string/history"
+            android:iconTint="@color/black"/>
+        <item
+            android:id="@+id/bookmark_menuItem"
+            android:icon="@android:drawable/btn_star"
+            android:title="@string/bookmark"
+            android:iconTint="@color/black"/>
+        <item
+            android:id="@+id/exit_menuItem"
+            android:icon="@android:drawable/ic_delete"
+            android:title="@string/exit"
+            android:iconTint="@color/black"/>
+
+
+    </group>
+</menu>
