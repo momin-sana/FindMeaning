@@ -1,6 +1,8 @@
 package com.student.findmeaning.Adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -31,8 +33,14 @@ public class DefinitionAdapter extends RecyclerView.Adapter<DefinitionVH> {
     @Override
     public void onBindViewHolder(@NonNull DefinitionVH holder, int position) {
         holder.definition_text.setText(definitionList.get(position).getDefinition());
-        holder.example_text.setText(definitionList.get(position).getDefinition());
-//        to add synonyms and antonyms, as they both are in list must be linked with StringBuilder
+        if (definitionList.get(position).getExample() != null && !definitionList.get(position).getExample().isEmpty()) {
+            holder.example_text.setText(definitionList.get(position).getExample());
+        } else {
+            holder.example_text.setText(R.string.no_example);
+        }
+//        holder.example_text.setText(definitionList.get(position).getExample());
+//        String exampleText = definitionList.get(position).getExample();
+//        Log.e("DefinitionAdapter", "onBindViewHolder: example text" + exampleText );//        to add synonyms and antonyms, as they both are in list must be linked with StringBuilder
         StringBuilder synonyms = new StringBuilder();
         StringBuilder antonyms = new StringBuilder();
         synonyms.append(definitionList.get(position).getSynonyms());
@@ -56,6 +64,7 @@ public class DefinitionAdapter extends RecyclerView.Adapter<DefinitionVH> {
         return definitionList.size();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void setData(List<Definition> definitionList) {
         this.definitionList = definitionList;
         notifyDataSetChanged();

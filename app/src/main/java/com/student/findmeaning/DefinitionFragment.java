@@ -102,7 +102,6 @@ public class DefinitionFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-;
         word_text = view.findViewById(R.id.word_text);
 
         Bundle bundle = getArguments();
@@ -115,7 +114,7 @@ public class DefinitionFragment extends Fragment {
         view.requestFocus();
         view.setOnKeyListener((view1, i, keyEvent) -> {
             if (i == KeyEvent.KEYCODE_BACK && keyEvent.getAction() == KeyEvent.ACTION_UP){
-                ((MainActivity) requireActivity()).onBackPressed();
+                requireActivity().onBackPressed();
                 return true;
             }
             return false;
@@ -128,16 +127,19 @@ public class DefinitionFragment extends Fragment {
    public void  fetchWordData(String word){
         if (word_text != null){
             String input = word_text.getText().toString().trim();
-            if (input.matches(".*\\d.*")){
-                Toast.makeText(getContext(), "Word should not contain numbers", Toast.LENGTH_SHORT).show();
-                return;
+            if (!(input.length() <= 1)){
+                if (input.matches(".*\\d.*")){
+                    Toast.makeText(getContext(), "Word should not contain numbers", Toast.LENGTH_SHORT).show();
+                    return;
+                }
             }
+
         }
 
         Call<List<DictionaryApiResponse>> call = RetrofitClientManager.getInstance().getApi().getWordDefinition(word);
         call.enqueue(new Callback<List<DictionaryApiResponse>>() {
             @Override
-            public void onResponse(Call<List<DictionaryApiResponse>> call, Response<List<DictionaryApiResponse>> response) {
+            public void onResponse(@NonNull Call<List<DictionaryApiResponse>> call, @NonNull Response<List<DictionaryApiResponse>> response) {
 
                 if (response.body() != null && response.isSuccessful()){
                     List<DictionaryApiResponse> dictionaryApiResponseList = response.body();
@@ -149,7 +151,7 @@ public class DefinitionFragment extends Fragment {
                 }
             }
             @Override
-            public void onFailure(Call<List<DictionaryApiResponse>> call, Throwable t) {
+            public void onFailure(@NonNull Call<List<DictionaryApiResponse>> call, @NonNull Throwable t) {
                 onFetchDataListener.onError(t.getMessage());
             }
         });

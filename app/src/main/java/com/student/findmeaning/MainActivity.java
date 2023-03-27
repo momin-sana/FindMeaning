@@ -30,13 +30,12 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnFetchDataListener{
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
-    private ImageButton btnNavMenu, phonetic_audio;
+    private ImageButton btnNavMenu;
     private NavigationView navigationView;
     private SearchView searchView;
     private TextView appnameTV;
     public Bundle bundle;
     private DefinitionFragment definitionFragment;
-    private RecyclerView phonetic_recyclerView, meaning_recyclerView;
     private ProgressBar progressBar;
 
 
@@ -53,9 +52,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout = findViewById(R.id.drawer_layout);
         appnameTV = findViewById(R.id.appNameTV);
         searchView = findViewById(R.id.search_view);
-
-        phonetic_recyclerView = findViewById(R.id.phonetic_recyclerView);
-        meaning_recyclerView = findViewById(R.id.meaning_recyclerView);
 
         progressBar = findViewById(R.id.progressBar);
         progressBar.setVisibility(View.INVISIBLE);
@@ -93,20 +89,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             new AlertDialog.Builder(MainActivity.this)
                     .setTitle("Exit App")
                     .setMessage("Sure want to exit?")
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            TransitionInflater inflater = TransitionInflater.from(MainActivity.this);
-                            getWindow().setExitTransition(inflater.inflateTransition(R.transition.fade));
-                            System.exit(0);
-                        }
+                    .setPositiveButton("Yes", (dialogInterface, i) -> {
+                        TransitionInflater inflater = TransitionInflater.from(MainActivity.this);
+                        getWindow().setExitTransition(inflater.inflateTransition(R.transition.fade));
+                        System.exit(0);
                     })
-                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            dialogInterface.dismiss();
-                        }
-                    })
+                    .setNegativeButton("Cancel", (dialogInterface, i) -> dialogInterface.dismiss())
                     .show();
         }
         drawerLayout.closeDrawer(GravityCompat.START);
@@ -118,6 +106,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             if (view.hasFocus() || searchView.getQuery().length() > 0) {
                 if (searchView.getVisibility() == View.VISIBLE) {
                     setSearchQueryListener();
+                    appnameTV.setVisibility(View.INVISIBLE);
                 }
             } else {
                 appnameTV.setVisibility(View.VISIBLE);

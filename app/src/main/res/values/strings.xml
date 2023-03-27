@@ -34,5 +34,7 @@
     <string name="antonyms">Antonyms</string>
     <string name="audio_fail">Could not play audio</string>
     <string name="unableToFetchData"> Type some other word</string>
+    <string name="no_audio_avaiable">No audio avaiable</string>
+    <string name="no_example">No example available</string>
 
 </resources>

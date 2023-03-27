@@ -22,13 +22,21 @@
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:paddingVertical="10dp"
-            android:text="sfdsf"
+            android:text=""
             android:paddingStart="10dp"
             android:textAllCaps="true"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold"
             tools:ignore="RtlSymmetry" />
+        <ImageButton
+            android:id="@+id/phonetic_audio_invisible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:backgroundTint="@android:color/transparent"
+            android:contentDescription="@string/audio"
+            android:src="@drawable/ic_audio" />
 
         <ImageButton
             android:id="@+id/phonetic_bookmark_icon"

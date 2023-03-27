@@ -4,7 +4,10 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.media.AudioAttributes;
 import android.media.MediaPlayer;
+import android.speech.tts.TextToSpeech;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -12,16 +15,27 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.student.findmeaning.Models.Phonetic;
 import com.student.findmeaning.R;
 import com.student.findmeaning.ViewHolders.PhoneticVH;
-
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class PhoneticAdapter extends RecyclerView.Adapter<PhoneticVH> {
-    Context context;
+    private final Context context;
     private List<Phonetic> phoneticList;
+    private MediaPlayer player;
+    private TextToSpeech textToSpeech;
 
     public PhoneticAdapter(Context context, List<Phonetic> phoneticList) {
         this.context = context;
-        this.phoneticList = phoneticList;
+        this.textToSpeech = new TextToSpeech(context, i -> {
+            if (i != TextToSpeech.SUCCESS) {
+                Log.e("PhoneticAdapter", "Error initializing TTS");
+                textToSpeech.setLanguage(Locale.ENGLISH);
+            }
+        });
+//        constructor calls the setData() method to filter the data and display only the data that has both audio and text.
+        setData(phoneticList);
     }
 
 
@@ -33,24 +47,40 @@ public class PhoneticAdapter extends RecyclerView.Adapter<PhoneticVH> {
 
     @Override
     public void onBindViewHolder(@NonNull PhoneticVH holder, @SuppressLint("RecyclerView") int position) {
-
+        String audioUrl = phoneticList.get(position).getAudio();
         holder.phonetic_text.setText(phoneticList.get(position).getText());
+        // Add a click listener to the whole view to stop the audio when clicking anywhere except scrolling
+         holder.itemView.setOnClickListener(v -> {
+            if (player != null) {
+                player.pause();
+            }
+        });
+
         holder.phonetic_audio.setOnClickListener(view -> {
-            MediaPlayer player = new MediaPlayer();
-            try{
+            if (player != null) {
+                player.release();
+            }
+            player = new MediaPlayer();
+            try {
                 AudioAttributes audioAttributes = new AudioAttributes.Builder()
                         .setUsage(AudioAttributes.USAGE_MEDIA)
                         .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
                         .build();
-
                 player.setAudioAttributes(audioAttributes);
-                player.setDataSource("https:" + phoneticList.get(position).getAudio());
-                player.prepare();
+                player.setDataSource(audioUrl);
+                player.setOnPreparedListener(MediaPlayer::start);
+                player.setOnErrorListener((mediaPlayer, i, i1) -> {
+                    Log.e("PhoneticAdapter", "Error playing audio: " + i);
+                    return true;
+                });
+                player.prepareAsync();
                 player.start();
-            }catch (Exception e){
+            } catch (IOException e) {
+                e.printStackTrace();
                 Toast.makeText(context, R.string.audio_fail, Toast.LENGTH_SHORT).show();
             }
         });
+
     }
 
     @Override
@@ -61,8 +91,35 @@ public class PhoneticAdapter extends RecyclerView.Adapter<PhoneticVH> {
         return phoneticList.size();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void setData(List<Phonetic> phoneticList) {
-        this.phoneticList = phoneticList;
+//        The setData() method iterates through the original phoneticList, checks each item for audio and text, and adds it to a new filteredList if it has both audio and text.
+//        The new filteredList is then used as the data source for the adapter.
+        List<Phonetic> filterList = new ArrayList<>();
+        for (int i = 0; i <phoneticList.size(); i++){
+            Phonetic phonetic = phoneticList.get(i);
+//            Note: need to have a hasAudio() and hasText() method in Phonetic class that returns true if the data has audio and text, respectively.
+            if (phonetic.hasAudio() && phonetic.hasText()){
+                filterList.add(phonetic);
+            }
+        }
+        this.phoneticList = filterList;
         notifyDataSetChanged();
+    }
+
+    @Override
+    public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView);
+        release();
+    }
+
+    private void release() {
+        if (player != null){
+            player.release();
+        }
+        if (textToSpeech != null) {
+            textToSpeech.stop();
+            textToSpeech.shutdown();
+        }
     }
 }

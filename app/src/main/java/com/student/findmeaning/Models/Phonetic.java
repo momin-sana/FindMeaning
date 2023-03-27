@@ -21,4 +21,11 @@ public class Phonetic {
         this.audio = audio;
     }
 
+    public boolean hasAudio() {
+        return audio != null && !audio.isEmpty();
+    }
+
+    public boolean hasText() {
+        return text != null && !text.isEmpty();
+    }
 }
