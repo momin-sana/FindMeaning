@@ -44,15 +44,6 @@
        app:itemTextColor="@color/black"
        android:layout_gravity="start"/>
 
-<!--   <com.google.android.material.navigation.NavigationView-->
-<!--       android:id="@+id/search_view"-->
-<!--       android:layout_width="wrap_content"-->
-<!--       android:layout_height="match_parent"-->
-<!--       android:layout_gravity="end"-->
-<!--       android:background="?attr/selectableItemBackground"-->
-<!--       android:padding="5dp"-->
-<!--       app:menu="@menu/search"/>-->
-
 
 </androidx.drawerlayout.widget.DrawerLayout>
 

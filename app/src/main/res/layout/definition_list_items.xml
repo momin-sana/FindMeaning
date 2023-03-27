@@ -26,6 +26,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/definition_text"
             android:text=""
+            android:textIsSelectable="true"
             android:textSize="15sp"
             android:textColor="@color/button_default"
             android:textStyle="normal"
@@ -47,6 +48,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/example_text"
             android:text=""
+            android:textIsSelectable="true"
             android:textSize="15sp"
             android:textColor="@color/button_default"
             android:textStyle="normal"
