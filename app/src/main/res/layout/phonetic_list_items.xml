@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    app:cardElevation="0dp"
     app:cardBackgroundColor="@android:color/transparent"
     app:layout_collapseMode="parallax">
 
@@ -26,12 +27,12 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:paddingVertical="8dp"
-                android:paddingStart="10dp"
+                android:paddingStart="5dp"
+                android:paddingTop="7dp"
                 android:textAlignment="textStart"
-                android:text="fgjh"
+                android:text=""
                 android:textColor="#B8B8B8"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 tools:ignore="RtlSymmetry" />
 
     </LinearLayout>
