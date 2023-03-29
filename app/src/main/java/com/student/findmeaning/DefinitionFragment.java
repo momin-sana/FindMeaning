@@ -3,12 +3,15 @@ package com.student.findmeaning;
 import static androidx.fragment.app.FragmentManager.TAG;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -40,11 +43,8 @@ public class DefinitionFragment extends Fragment {
     private RecyclerView phonetic_recyclerView, meaning_recyclerView;
     private PhoneticAdapter phoneticAdapter;
     private MeaningAdapter meaningAdapter;
-    private List<DictionaryApiResponse> dictionaryApiResponseList;
     private List<Phonetic> phoneticList;
     private List<Meaning> meaningList;
-
-    private ImageButton phonetic_audio;
     private TextView word_text, meaning, appnameTV, phonetic_text;
     private OnFetchDataListener onFetchDataListener;
     private ProgressBar progressBar;
@@ -62,10 +62,10 @@ public class DefinitionFragment extends Fragment {
         if (context instanceof OnFetchDataListener){
             onFetchDataListener = (OnFetchDataListener) context;
         }
-//        else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnfetchDataListener");
-//        }
+        else {
+            throw new RuntimeException(context
+                    + " must implement OnfetchDataListener");
+        }
     }
 
     @Override
@@ -73,8 +73,8 @@ public class DefinitionFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_definition, container, false);
 
-        appnameTV = view.findViewById(R.id.appNameTV);
-        progressBar = view.findViewById(R.id.progressBar);
+//        appnameTV = view.findViewById(R.id.appNameTV);
+//        progressBar = view.findViewById(R.id.progressBar);
         meaning = view.findViewById(R.id.meaning);
 
         phoneticList = new ArrayList<>();
@@ -146,7 +146,21 @@ public class DefinitionFragment extends Fragment {
                     onFetchDataListener.onFetchData(dictionaryApiResponseList.get(0), word);
                 }else {
 //                    meaning.setText(R.string.unableToFetchData);
-//                    CREATE ALERT DIALOG HERE TO LINK BACK TO MAIN FRAGMENT ON OK BTN
+                    AlertDialog alertDialog = new AlertDialog.Builder(requireContext())
+                            .setTitle("Unable to fetch data from API")
+                                    .setMessage("Type some other word.")
+                            .setCancelable(false)
+                                            .setPositiveButton("Ok", (dialogInterface, i) -> {
+                                                MainFragment mainFragment = new MainFragment();
+                                                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                                                fragmentManager.popBackStack();
+                                                fragmentManager.beginTransaction()
+                                                        .replace(R.id.fragment_container, mainFragment)
+                                                        .commit();
+                                            })
+                                                    .create();
+                    alertDialog.setCanceledOnTouchOutside(false);
+                    alertDialog.show();
                     onFetchDataListener.onError("Unable to fetch data from API");
                 }
             }

@@ -8,6 +8,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
@@ -21,6 +22,8 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.navigation.NavigationView;
 import com.student.findmeaning.Models.DictionaryApiResponse;
 import com.student.findmeaning.Models.Meaning;
@@ -36,7 +39,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private TextView appnameTV;
     public Bundle bundle;
     private DefinitionFragment definitionFragment;
-    private ProgressBar progressBar;
+//    private ProgressBar progressBar;
+    private LottieAnimationView progressBar;
 
 
     @Override
@@ -54,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         searchView = findViewById(R.id.search_view);
 
         progressBar = findViewById(R.id.progressBar);
-        progressBar.setVisibility(View.INVISIBLE);
+//        progressBar.setVisibility(View.INVISIBLE);
 
         navigationView.setNavigationItemSelectedListener(this);
         btnNavMenu.setOnClickListener(view -> {
@@ -66,10 +70,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSearchViewListener();
 
         MainFragment mainFragment = new MainFragment();
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.fragment_container, mainFragment)
-                        .addToBackStack(null);
-        transaction.commit();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.popBackStack();
+        fragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, mainFragment)
+                .addToBackStack("MainFragment")
+                .commit();
     }
 
     @Override
@@ -167,9 +173,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onBackPressed() {
         // If DefinitionFragment is currently visible, replace it with MainFragment
-
         Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
         if (currentFragment instanceof  DefinitionFragment){
+//            ensure that the fragments are properly managed in the back stack and prevent overlapping when the activity is recreated.
+            getSupportFragmentManager().popBackStack("MainFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment_container,
                             MainFragment.newInstance())

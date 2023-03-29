@@ -24,13 +24,18 @@
           android:layout_width="match_parent"
           android:layout_height="match_parent">
 
-         <ProgressBar
+         <com.airbnb.lottie.LottieAnimationView
              android:id="@+id/progressBar"
-             style="?android:attr/progressBarStyle"
              android:layout_width="match_parent"
-             android:layout_height="80dp"
-             android:layout_marginVertical="270dp"
-             android:padding="10dp" />
+             android:layout_height="match_parent"
+             android:padding="150dp"
+             android:visibility="invisible"
+             android:background="@android:color/transparent"
+             app:lottie_autoPlay="true"
+             app:lottie_loop="true"
+             app:lottie_rawRes="@raw/dictionaryanimation"
+             tools:ignore="MissingConstraints" />
+
       </FrameLayout>
 
    </LinearLayout>
