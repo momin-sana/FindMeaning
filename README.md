@@ -1,7 +1,7 @@
 # FindMeaning
 ### Android Application- *Java*
 
-FindMeaning is a dictionary app that uses Retrofit to fetch data from an API and display it in a RecyclerListView. The data includes a list of phonetics with audio.
+FindMeaning is a dictionary app that uses Retrofit to fetch data from an API (`https://dictionaryapi.dev/`) and display it in a RecyclerListView. The data includes a list of phonetics with audio.
 
 ### Features:
 * Splash screen with animation: gives users a visually appealing introduction to the app
