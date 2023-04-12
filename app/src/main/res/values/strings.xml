@@ -36,5 +36,9 @@
     <string name="unableToFetchData"> Type some other word</string>
     <string name="no_audio_avaiable">No audio avaiable</string>
     <string name="no_example">No example available</string>
+    <string name="no_numbers">Word should not contain numbers</string>
+    <string name="exit_app">Exit App?</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
 
 </resources>

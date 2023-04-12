@@ -25,6 +25,7 @@
         <entry key="..\:/Users/Sana-Mohsin/AndroidStudioProjects/FindMeaning/app/src/main/res/drawable/ic_round_sticky_note_2_24.xml" value="0.2035" />
         <entry key="..\:/Users/Sana-Mohsin/AndroidStudioProjects/FindMeaning/app/src/main/res/drawable/linear.xml" value="0.1065" />
         <entry key="..\:/Users/Sana-Mohsin/AndroidStudioProjects/FindMeaning/app/src/main/res/drawable/linera_gradient_bg.xml" value="0.1065" />
+        <entry key="..\:/Users/Sana-Mohsin/AndroidStudioProjects/FindMeaning/app/src/main/res/drawable/rounded_button_yellow.xml" value="0.1055" />
         <entry key="..\:/Users/Sana-Mohsin/AndroidStudioProjects/FindMeaning/app/src/main/res/drawable/searchicon.xml" value="0.1" />
         <entry key="..\:/Users/Sana-Mohsin/AndroidStudioProjects/FindMeaning/app/src/main/res/drawable/side_nav_bar.xml" value="0.2245" />
         <entry key="..\:/Users/Sana-Mohsin/AndroidStudioProjects/FindMeaning/app/src/main/res/layout-v28/fragment_definition.xml" value="0.12107396149949341" />
@@ -36,9 +37,10 @@
         <entry key="..\:/Users/Sana-Mohsin/AndroidStudioProjects/FindMeaning/app/src/main/res/layout/activity_splash.xml" value="0.1" />
         <entry key="..\:/Users/Sana-Mohsin/AndroidStudioProjects/FindMeaning/app/src/main/res/layout/app_bar_main.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Sana-Mohsin/AndroidStudioProjects/FindMeaning/app/src/main/res/layout/content_main.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Sana-Mohsin/AndroidStudioProjects/FindMeaning/app/src/main/res/layout/custom_alert_dialog.xml" value="0.14221014492753623" />
         <entry key="..\:/Users/Sana-Mohsin/AndroidStudioProjects/FindMeaning/app/src/main/res/layout/definition_list_items.xml" value="0.25462962962962965" />
         <entry key="..\:/Users/Sana-Mohsin/AndroidStudioProjects/FindMeaning/app/src/main/res/layout/fragment_blank.xml" value="0.2164855072463768" />
-        <entry key="..\:/Users/Sana-Mohsin/AndroidStudioProjects/FindMeaning/app/src/main/res/layout/fragment_definition.xml" value="0.4" />
+        <entry key="..\:/Users/Sana-Mohsin/AndroidStudioProjects/FindMeaning/app/src/main/res/layout/fragment_definition.xml" value="0.176" />
         <entry key="..\:/Users/Sana-Mohsin/AndroidStudioProjects/FindMeaning/app/src/main/res/layout/fragment_gallery.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Sana-Mohsin/AndroidStudioProjects/FindMeaning/app/src/main/res/layout/fragment_home.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Sana-Mohsin/AndroidStudioProjects/FindMeaning/app/src/main/res/layout/fragment_main.xml" value="0.2" />

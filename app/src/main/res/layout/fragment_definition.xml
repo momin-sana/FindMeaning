@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@drawable/fragment_background_definition"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    android:background="@drawable/fragment_background_definition">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,19 +28,12 @@
             android:padding="5dp"
             android:text=""
             android:textAllCaps="false"
-            android:textColor="@color/white"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:inputType="textCapSentences"
+            android:textColor="@color/text_icon"
             android:textSize="22sp"
             android:textStyle="bold"
-            tools:ignore="RtlSymmetry" />
-
-        <ImageButton
-            android:id="@+id/phonetic_audio_invisible"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="invisible"
-            android:backgroundTint="@android:color/transparent"
-            android:contentDescription="@string/audio"
-            android:src="@drawable/ic_audio" />
+            tools:ignore="RtlSymmetry,TextViewEdits" />
 
         <ImageButton
             android:id="@+id/phonetic_bookmark_icon"
@@ -82,7 +79,21 @@
             android:id="@+id/meaning_recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp" />
+            android:layout_margin="5dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
     </LinearLayout>
-</androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        android:padding="100dp"
+        android:layout_margin="60dp"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/dictionaryanimation"
+        tools:ignore="MissingConstraints" />
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

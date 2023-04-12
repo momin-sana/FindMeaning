@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         android:background="@color/button_default"
         app:layout_collapseMode="pin"
+        app:layout_scrollFlags="scroll|enterAlways"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar">
 
         <LinearLayout

@@ -2,14 +2,21 @@ package com.student.findmeaning;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ClipDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.transition.TransitionInflater;
+
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -33,18 +40,21 @@ public class MainFragment extends Fragment {
         requireActivity().getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
+                View customLayout = LayoutInflater.from(requireActivity()).inflate(R.layout.custom_alert_dialog, null);
+                Button positiveButton = customLayout.findViewById(R.id.positive_button);
+                Button negativeButton = customLayout.findViewById(R.id.negative_button);
 
-                        new AlertDialog.Builder(requireContext())
-                                .setTitle("Exit App?")
-                                .setMessage("Sure want to exit?")
-                                .setPositiveButton("Yes", (dialogInterface, i) -> {
+                AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+                builder.setView(customLayout);
+                AlertDialog dialog = builder.create();
+                dialog.show();
 
-                                    TransitionInflater inflater = TransitionInflater.from(requireActivity());
-                                    setExitTransition(inflater.inflateTransition(R.transition.fade));
-                                    requireActivity().finish();
-                                })
-                                .setNegativeButton("Cancel", (dialogInterface, i) -> dialogInterface.dismiss())
-                                .create().show();
+                positiveButton.setOnClickListener(v -> {
+                    TransitionInflater inflater1 = TransitionInflater.from(requireActivity());
+                    setExitTransition(inflater1.inflateTransition(R.transition.fade));
+                    System.exit(0);
+                });
+                negativeButton.setOnClickListener(v -> dialog.dismiss());
             }
         });
     }
@@ -79,16 +89,36 @@ public class MainFragment extends Fragment {
             startActivity(intent);
         });
 
-        exit.setOnClickListener(view12 -> new AlertDialog.Builder(requireContext())
-                .setTitle("Exit App")
-                .setMessage("Sure want to exit?")
-                .setPositiveButton("Yes", (dialogInterface, i) -> {
-                    TransitionInflater inflater1 = TransitionInflater.from(requireActivity());
-                    setExitTransition(inflater1.inflateTransition(R.transition.fade));
-                    System.exit(0);
-                })
-                .setNegativeButton("Cancel", (dialogInterface, i) -> dialogInterface.dismiss())
-                .show());
+//        exit.setOnClickListener(view12 -> new AlertDialog.Builder(requireContext())
+//                .setTitle("Exit App")
+//                .setPositiveButton("Yes", (dialogInterface, i) -> {
+//                    TransitionInflater inflater1 = TransitionInflater.from(requireActivity());
+//                    setExitTransition(inflater1.inflateTransition(R.transition.fade));
+//                    System.exit(0);
+//                })
+//                .setNegativeButton("Cancel", (dialogInterface, i) -> dialogInterface.dismiss())
+//                .show()
+//        );
+
+        exit.setOnClickListener(view12 -> {
+            View customLayout = LayoutInflater.from(requireActivity()).inflate(R.layout.custom_alert_dialog, null);
+            Button positiveButton = customLayout.findViewById(R.id.positive_button);
+            Button negativeButton = customLayout.findViewById(R.id.negative_button);
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+            builder.setView(customLayout);
+            AlertDialog dialog = builder.create();
+            dialog.show();
+
+            positiveButton.setOnClickListener(v -> {
+                TransitionInflater inflater1 = TransitionInflater.from(requireActivity());
+                setExitTransition(inflater1.inflateTransition(R.transition.fade));
+                System.exit(0);
+            });
+            negativeButton.setOnClickListener(v -> dialog.dismiss());
+
+            }
+        );
         return view;
     }
 

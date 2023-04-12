@@ -9,7 +9,8 @@
     android:layout_margin="10dp"
     android:layout_marginTop="10dp"
     android:layout_marginStart="10dp"
-    android:padding="10dp">
+    android:padding="10dp"
+    android:background="@color/white">
 
 <!--    notes -->
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -26,7 +27,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="3dp"
-            android:src="@drawable/ic_round_sticky_note_2_24"/>
+            android:src="@drawable/ic_round_sticky_note_2_24"
+            android:contentDescription="@string/notes" />
         <TextView
             android:id="@+id/notes_textLink"
             android:layout_width="wrap_content"
@@ -54,7 +56,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="3dp"
-            android:src="@drawable/ic_baseline_collections_bookmark_24" />
+            android:src="@drawable/ic_baseline_collections_bookmark_24"
+            android:contentDescription="@string/bookmark" />
 
         <TextView
             android:id="@+id/bookmark_textLink"
@@ -82,7 +85,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="3dp"
-            android:src="@drawable/ic_baseline_history_24"/>
+            android:src="@drawable/ic_baseline_history_24"
+            android:contentDescription="@string/history" />
         <TextView
             android:id="@+id/history_textLink"
             android:layout_width="wrap_content"
@@ -109,7 +113,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="3dp"
-            android:src="@drawable/ic_baseline_highlight_off_24"/>
+            android:src="@drawable/ic_baseline_highlight_off_24"
+            android:contentDescription="@string/exit" />
         <TextView
             android:id="@+id/exit_textLink"
             android:textColor="@color/black"

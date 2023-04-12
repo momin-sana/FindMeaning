@@ -16,8 +16,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.transition.TransitionInflater;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -76,6 +78,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 .replace(R.id.fragment_container, mainFragment)
                 .addToBackStack("MainFragment")
                 .commit();
+
     }
 
     @Override
@@ -92,16 +95,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent intent = new Intent(this, History.class);
             startActivity(intent);
         } else if (id == R.id.exit_menuItem) {
-            new AlertDialog.Builder(MainActivity.this)
-                    .setTitle("Exit App")
-                    .setMessage("Sure want to exit?")
-                    .setPositiveButton("Yes", (dialogInterface, i) -> {
-                        TransitionInflater inflater = TransitionInflater.from(MainActivity.this);
-                        getWindow().setExitTransition(inflater.inflateTransition(R.transition.fade));
-                        System.exit(0);
-                    })
-                    .setNegativeButton("Cancel", (dialogInterface, i) -> dialogInterface.dismiss())
-                    .show();
+            new AlertDialog.Builder(MainActivity.this);
+            View customLayout = LayoutInflater.from(MainActivity.this).inflate(R.layout.custom_alert_dialog, null);
+            Button positiveButton = customLayout.findViewById(R.id.positive_button);
+            Button negativeButton = customLayout.findViewById(R.id.negative_button);
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            builder.setView(customLayout);
+            AlertDialog dialog = builder.create();
+            dialog.show();
+
+            positiveButton.setOnClickListener(v -> System.exit(0));
+            negativeButton.setOnClickListener(v -> dialog.dismiss());
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;

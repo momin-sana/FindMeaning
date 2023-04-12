@@ -1,39 +1,34 @@
 package com.student.findmeaning;
 
-import static androidx.fragment.app.FragmentManager.TAG;
-
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
+import com.google.android.material.appbar.AppBarLayout;
 import com.student.findmeaning.Adapters.MeaningAdapter;
 import com.student.findmeaning.Adapters.PhoneticAdapter;
 import com.student.findmeaning.Models.DictionaryApiResponse;
 import com.student.findmeaning.Models.Meaning;
 import com.student.findmeaning.Models.Phonetic;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -47,7 +42,9 @@ public class DefinitionFragment extends Fragment {
     private List<Meaning> meaningList;
     private TextView word_text, meaning, appnameTV, phonetic_text;
     private OnFetchDataListener onFetchDataListener;
-    private ProgressBar progressBar;
+    private LottieAnimationView progressBar;
+    private Toolbar toolbar;
+    private AppBarLayout appBarLayout;
 
 
     public DefinitionFragment() {
@@ -73,8 +70,7 @@ public class DefinitionFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_definition, container, false);
 
-//        appnameTV = view.findViewById(R.id.appNameTV);
-//        progressBar = view.findViewById(R.id.progressBar);
+        progressBar = view.findViewById(R.id.progressBar);
         meaning = view.findViewById(R.id.meaning);
 
         phoneticList = new ArrayList<>();
@@ -90,6 +86,13 @@ public class DefinitionFragment extends Fragment {
         meaningAdapter = new MeaningAdapter(getContext(), meaningList);
         meaning_recyclerView.setAdapter(meaningAdapter);
 
+        // view. will find the AppBarLayout inside the inflated View for the fragment,
+        // while getActivity(). will find the AppBarLayout inside the activity layout.
+        //If you want to use the AppBarLayout defined in the activity layout, you should use getActivity().findViewById(R.id.app_bar_layout) instead.
+        appBarLayout = getActivity().findViewById(R.id.app_bar_layout);
+        toolbar = getActivity().findViewById(R.id.toolbar);
+        meaning_recyclerView.addOnScrollListener(scrollListener);
+
         return view;
     }
 
@@ -99,6 +102,7 @@ public class DefinitionFragment extends Fragment {
         phoneticAdapter.setData(this.phoneticList);
         meaningAdapter.setData(this.meaningList);
     }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -110,6 +114,7 @@ public class DefinitionFragment extends Fragment {
             word_text.setText(word);
         }
 
+        // add  back button press.
         view.setFocusableInTouchMode(true);
         view.requestFocus();
         view.setOnKeyListener((view1, i, keyEvent) -> {
@@ -121,6 +126,47 @@ public class DefinitionFragment extends Fragment {
         });
     }
 
+    private final RecyclerView.OnScrollListener scrollListener = (new RecyclerView.OnScrollListener() {
+        int scrollDist = 0;
+        private static final int SHOW_THRESHOLD = 20;
+
+        @Override
+        public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+            super.onScrolled(recyclerView, dx, dy);
+            // Calculate the scroll distance
+            scrollDist += dy;
+            // Check if the user has scrolled enough to hide/show the toolbar
+            if (appBarLayout.getVisibility() == View.VISIBLE && scrollDist > SHOW_THRESHOLD) {
+                // Hide the toolbar
+                animateToolbar(false);
+                appBarLayout.setVisibility(View.GONE);
+                phonetic_recyclerView.setVisibility(View.GONE);
+                scrollDist = 0;
+            } else if (scrollDist < SHOW_THRESHOLD && appBarLayout.getVisibility() != View.VISIBLE) {
+                // Show the toolbar
+                animateToolbar(true);
+                appBarLayout.setVisibility(View.VISIBLE);
+                phonetic_recyclerView.setVisibility(View.VISIBLE);
+                scrollDist = 0;
+            }
+        }
+    });
+// Method to animate the toolbar hide/show
+    private void animateToolbar(boolean show) {
+        if (show) {
+            appBarLayout.animate()
+                    .translationY(0)
+                    .setInterpolator(new DecelerateInterpolator(2))
+                    .start();
+        } else {
+            int toolbarHeight = toolbar.getHeight();
+            appBarLayout.animate()
+                    .translationY(-toolbarHeight)
+                    .setInterpolator(new AccelerateInterpolator(2))
+                    .start();
+        }
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {super.onCreate(savedInstanceState);}
 
@@ -129,23 +175,23 @@ public class DefinitionFragment extends Fragment {
             String input = word_text.getText().toString().trim();
             if (!(input.length() <= 1)){
                 if (input.matches(".*\\d.*")){
-                    Toast.makeText(getContext(), "Word should not contain numbers", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), R.string.no_numbers, Toast.LENGTH_SHORT).show();
                     return;
                 }
             }
-
         }
 
+        showProgressBar(true);
         Call<List<DictionaryApiResponse>> call = RetrofitClientManager.getInstance().getApi().getWordDefinition(word);
         call.enqueue(new Callback<List<DictionaryApiResponse>>() {
             @Override
             public void onResponse(@NonNull Call<List<DictionaryApiResponse>> call, @NonNull Response<List<DictionaryApiResponse>> response) {
+                showProgressBar(false);
 
                 if (response.body() != null && response.isSuccessful()){
                     List<DictionaryApiResponse> dictionaryApiResponseList = response.body();
                     onFetchDataListener.onFetchData(dictionaryApiResponseList.get(0), word);
                 }else {
-//                    meaning.setText(R.string.unableToFetchData);
                     AlertDialog alertDialog = new AlertDialog.Builder(requireContext())
                             .setTitle("Unable to fetch data from API")
                                     .setMessage("Type some other word.")
@@ -166,16 +212,25 @@ public class DefinitionFragment extends Fragment {
             }
             @Override
             public void onFailure(@NonNull Call<List<DictionaryApiResponse>> call, @NonNull Throwable t) {
+                showProgressBar(false);
                 onFetchDataListener.onError(t.getMessage());
             }
         });
     }
 
-//   @Override
-//   public void onDestroy() {
-//        super.onDestroy();
-//
-//        MainFragment mainFragment = new MainFragment();
-//        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, mainFragment).commit();
-//   }
+    private void showProgressBar(boolean show) {
+        if (progressBar != null) {
+            if (show) {
+            progressBar.setVisibility(View.VISIBLE);
+            } else {
+                progressBar.setVisibility(View.GONE);
+            }
+        }
+    }
+   @Override
+   public void onDestroy() {
+        super.onDestroy();
+// Remove the OnScrollListener from the RecyclerView
+       meaning_recyclerView.removeOnScrollListener(scrollListener);
+   }
 }
