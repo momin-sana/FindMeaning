@@ -6,7 +6,6 @@
     android:layout_height="wrap_content"
     app:cardElevation="0dp"
     android:paddingStart="3dp"
-    android:layout_marginBottom="3dp"
     app:cardBackgroundColor="#B0E4E6F1"
     tools:ignore="RtlSymmetry">
 

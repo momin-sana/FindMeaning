@@ -18,4 +18,7 @@ public interface DictionaryApi {
     @GET("api/v2/entries/en/{word}")
     Call<List<DictionaryApiResponse>> getWordDefinition(@Path("word") String word);
 
+    @GET("api/v2/entries/en/suggest/{query}")
+    Call<List<String>> getSuggestions(@Path("query") String query);
+
 }

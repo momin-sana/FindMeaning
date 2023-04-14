@@ -182,11 +182,13 @@ public class DefinitionFragment extends Fragment {
         }
 
         showProgressBar(true);
+
         Call<List<DictionaryApiResponse>> call = RetrofitClientManager.getInstance().getApi().getWordDefinition(word);
         call.enqueue(new Callback<List<DictionaryApiResponse>>() {
             @Override
             public void onResponse(@NonNull Call<List<DictionaryApiResponse>> call, @NonNull Response<List<DictionaryApiResponse>> response) {
                 showProgressBar(false);
+                meaning.setVisibility(View.VISIBLE);
 
                 if (response.body() != null && response.isSuccessful()){
                     List<DictionaryApiResponse> dictionaryApiResponseList = response.body();
@@ -216,6 +218,11 @@ public class DefinitionFragment extends Fragment {
                 onFetchDataListener.onError(t.getMessage());
             }
         });
+    }
+
+    //to retrieve the suggestions
+    public void setSuggestions(){
+
     }
 
     private void showProgressBar(boolean show) {

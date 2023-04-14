@@ -38,20 +38,17 @@ public class DefinitionAdapter extends RecyclerView.Adapter<DefinitionVH> {
         } else {
             holder.example_text.setText(R.string.no_example);
         }
-//        holder.example_text.setText(definitionList.get(position).getExample());
-//        String exampleText = definitionList.get(position).getExample();
-//        Log.e("DefinitionAdapter", "onBindViewHolder: example text" + exampleText );//        to add synonyms and antonyms, as they both are in list must be linked with StringBuilder
-        StringBuilder synonyms = new StringBuilder();
-        StringBuilder antonyms = new StringBuilder();
-        synonyms.append(definitionList.get(position).getSynonyms());
-        antonyms.append(definitionList.get(position).getAntonyms());
-
-        holder.synonyms_textView.setText(synonyms);
-        holder.antonyms_textView.setText(antonyms);
-
-//        make text selected
-        holder.synonyms_textView.setSelected(true);
-        holder.antonyms_textView.setSelected(true);
+//        StringBuilder synonyms = new StringBuilder();
+//        StringBuilder antonyms = new StringBuilder();
+//        synonyms.append(definitionList.get(position).getSynonyms());
+//        antonyms.append(definitionList.get(position).getAntonyms());
+//
+//        holder.synonyms_textView.setText(synonyms);
+//        holder.antonyms_textView.setText(antonyms);
+//
+////        make text selected
+//        holder.synonyms_textView.setSelected(true);
+//        holder.antonyms_textView.setSelected(true);
 
     }
 

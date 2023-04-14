@@ -57,47 +57,55 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:text="@string/synonyms"
-            android:textSize="20sp"
-            android:textColor="@color/button_default"
-            android:textStyle="italic"
-            android:fontFamily="serif"
-            android:padding="5dp"
+        <TableRow
+            android:id="@+id/hr"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginHorizontal="10dp"
+            android:background="@color/button_default" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/synonyms_textView"
-            android:text=""
-            android:textColor="@color/button_default"
-            android:textStyle="normal"
-            android:textSize="18sp"
-            android:fontFamily="sans-serif-condensed"            android:padding="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+<!--        <androidx.appcompat.widget.AppCompatTextView-->
+<!--            android:text="@string/synonyms"-->
+<!--            android:textSize="20sp"-->
+<!--            android:textColor="@color/button_default"-->
+<!--            android:textStyle="italic"-->
+<!--            android:fontFamily="serif"-->
+<!--            android:padding="5dp"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"/>-->
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:text="@string/antonyms"
-            android:textSize="20sp"
-            android:textColor="@color/button_default"
-            android:textStyle="italic"
-            android:fontFamily="serif"
-            android:padding="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+<!--        <androidx.appcompat.widget.AppCompatTextView-->
+<!--            android:id="@+id/synonyms_textView"-->
+<!--            android:text=""-->
+<!--            android:textColor="@color/button_default"-->
+<!--            android:textStyle="normal"-->
+<!--            android:textSize="18sp"-->
+<!--            android:fontFamily="sans-serif-condensed"            android:padding="5dp"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"/>-->
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/antonyms_textView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:fontFamily="sans-serif-condensed"
-            android:padding="5dp"
-            android:scrollHorizontally="true"
-            android:text=""
-            android:textColor="@color/button_default"
-            android:textStyle="normal" />
+<!--        <androidx.appcompat.widget.AppCompatTextView-->
+<!--            android:text="@string/antonyms"-->
+<!--            android:textSize="20sp"-->
+<!--            android:textColor="@color/button_default"-->
+<!--            android:textStyle="italic"-->
+<!--            android:fontFamily="serif"-->
+<!--            android:padding="5dp"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"/>-->
+
+<!--        <androidx.appcompat.widget.AppCompatTextView-->
+<!--            android:id="@+id/antonyms_textView"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:textSize="18sp"-->
+<!--            android:fontFamily="sans-serif-condensed"-->
+<!--            android:padding="5dp"-->
+<!--            android:scrollHorizontally="true"-->
+<!--            android:text=""-->
+<!--            android:textColor="@color/button_default"-->
+<!--            android:textStyle="normal" />-->
 
     </LinearLayout>
 

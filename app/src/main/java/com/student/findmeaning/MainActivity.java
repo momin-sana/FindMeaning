@@ -41,8 +41,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private TextView appnameTV;
     public Bundle bundle;
     private DefinitionFragment definitionFragment;
-//    private ProgressBar progressBar;
-    private LottieAnimationView progressBar;
 
 
     @Override
@@ -58,9 +56,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout = findViewById(R.id.drawer_layout);
         appnameTV = findViewById(R.id.appNameTV);
         searchView = findViewById(R.id.search_view);
-
-        progressBar = findViewById(R.id.progressBar);
-//        progressBar.setVisibility(View.INVISIBLE);
 
         navigationView.setNavigationItemSelectedListener(this);
         btnNavMenu.setOnClickListener(view -> {
@@ -130,7 +125,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                progressBar.setVisibility(View.VISIBLE);
 
                 // Create a new instance of DefinitionFragment with arguments
                 definitionFragment = DefinitionFragment.newInstance();
@@ -147,8 +141,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 searchView.setIconified(true);
                 searchView.clearFocus();
-
-                progressBar.setVisibility(View.INVISIBLE);
                 return true;
             }
             @Override

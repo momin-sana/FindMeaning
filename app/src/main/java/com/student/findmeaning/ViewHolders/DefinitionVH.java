@@ -15,7 +15,7 @@ public class DefinitionVH extends RecyclerView.ViewHolder {
         super(itemView);
         definition_text = itemView.findViewById(R.id.definition_text);
         example_text = itemView.findViewById(R.id.example_text);
-        synonyms_textView = itemView.findViewById(R.id.synonyms_textView);
-        antonyms_textView = itemView.findViewById(R.id.antonyms_textView);
+//        synonyms_textView = itemView.findViewById(R.id.synonyms_textView);
+//        antonyms_textView = itemView.findViewById(R.id.antonyms_textView);
     }
 }
