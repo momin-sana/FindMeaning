@@ -31,6 +31,7 @@ public class PhoneticAdapter extends RecyclerView.Adapter<PhoneticVH> {
         this.textToSpeech = new TextToSpeech(context, i -> {
             if (i != TextToSpeech.SUCCESS) {
                 Log.e("PhoneticAdapter", "Error initializing TTS");
+            }else{
                 textToSpeech.setLanguage(Locale.ENGLISH);
             }
         });
