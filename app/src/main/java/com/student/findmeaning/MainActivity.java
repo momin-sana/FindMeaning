@@ -12,24 +12,21 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.transition.TransitionInflater;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.navigation.NavigationView;
 import com.student.findmeaning.Models.DictionaryApiResponse;
 import com.student.findmeaning.Models.Meaning;
 import com.student.findmeaning.Models.Phonetic;
+
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnFetchDataListener{
@@ -149,7 +146,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
         searchView.setBackgroundResource(R.drawable.button_background);
-
     }
 
     @Override

@@ -14,6 +14,7 @@
         app:layout_scrollFlags="scroll|enterAlways"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar">
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"

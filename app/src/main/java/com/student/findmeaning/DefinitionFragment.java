@@ -220,11 +220,6 @@ public class DefinitionFragment extends Fragment {
         });
     }
 
-    //to retrieve the suggestions
-    public void setSuggestions(){
-
-    }
-
     private void showProgressBar(boolean show) {
         if (progressBar != null) {
             if (show) {
