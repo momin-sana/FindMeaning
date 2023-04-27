@@ -40,5 +40,6 @@
     <string name="exit_app">Exit App?</string>
     <string name="no">No</string>
     <string name="yes">Yes</string>
+    <string name="delete_all_data">Delete all</string>
 
 </resources>
