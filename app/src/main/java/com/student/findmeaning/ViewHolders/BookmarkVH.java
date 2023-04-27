@@ -6,7 +6,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.student.findmeaning.R;
 
 public class BookmarkVH extends RecyclerView.ViewHolder {

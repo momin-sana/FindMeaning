@@ -21,7 +21,7 @@ public class History extends AppCompatActivity {
     TextView textView_pgName;
     ImageButton backImageBtn, deleteImageBtn, actionBarDeleteAll;
 
-    //    yeha list auto add hogi from model-DB Table, jb user search pe click kre ga tb yeha word add hojaye ga. ya jb search successful hoga tb   List<String> data = Arrays.asList("Item 1", "Item 2", "Item 3");
+    //    yeha list auto add hogii from model-DB Table, jb user search pe click kre ga tb yeha word add hojaye ga. ya jb search successful hoga tb   List<String> data = Arrays.asList("Item 1", "Item 2", "Item 3");
     List<String> historyData = Arrays.asList("Item 1 History", "Item 2 history", "Item 3 history");
 
 

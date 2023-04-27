@@ -36,7 +36,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryVH> {
         holder.historyTVList.setText(item);
         holder.historyCheckBox.setChecked(false);
         holder.historyTVList.setOnClickListener(view -> {
-//                When user clicks on text it should open definitionfragment with its meaning. jo kaam searchview k click krne pe hoga wahi kaam yeha text k click krne pe hoga
+//                When user clicks on text it should open definition fragment with its meaning. jo kaam searchview k click krne pe hoga wahi kaam yeha text k click krne pe hoga
             Toast.makeText(context, "clicked on: "+ item, Toast.LENGTH_SHORT).show();
         });
     }

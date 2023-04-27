@@ -7,7 +7,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.student.findmeaning.History;
 import com.student.findmeaning.R;
 
 public class HistoryVH extends RecyclerView.ViewHolder{

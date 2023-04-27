@@ -35,7 +35,7 @@ public class Bookmark extends AppCompatActivity {
 
         backImageBtn.setOnClickListener(view -> onBackPressed());
 
-//        yeha dele ka kaam hoga. checkbox k check krne pe identify hoga k checked items delete krne hain
+//        yeha dele ka kaam hogaa. checkbox k check krne pe identify hoga k checked items delete krne hain
         deleteImageBtn.setOnClickListener(view -> Toast.makeText(this, "Delete btn clicked", Toast.LENGTH_SHORT).show());
 //       delete all mein sara data delete hoga
         actionBarDeleteAll.setOnClickListener(view -> Toast.makeText(this, "Delete All btn clicked", Toast.LENGTH_SHORT).show());

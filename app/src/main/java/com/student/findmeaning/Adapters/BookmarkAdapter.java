@@ -37,7 +37,7 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkVH> {
         holder.bookmarkTVList.setText(item);
         holder.bookmarkCheckBox.setChecked(false);
         holder.bookmarkTVList.setOnClickListener(view -> {
-//                When user clicks on text it should open definitionfragment with its meaning. jo kaam searchview k click krne pe hoga wahi kaam yeha text k click krne pe hoga
+//                When user clicks on text it should open definition fragment with its meaning. jo kaam searchview k click krne pe hoga wahi kaam yeha text k click krne pe hoga
             Toast.makeText(context, "clicked on: "+ item, Toast.LENGTH_SHORT).show();
         });
     }
