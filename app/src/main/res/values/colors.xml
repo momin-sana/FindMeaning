@@ -19,4 +19,5 @@
     <color name="button_default">#E4182151</color>
     <color name="text_icon">#FFC107</color>
     <color name="query_background_fade">#6DCFBE8D</color>
+    <color name="light_blue_background">#B0E4E6F1</color>
 </resources>
