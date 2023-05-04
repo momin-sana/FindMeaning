@@ -1,11 +1,16 @@
 package com.student.findmeaning;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.res.ResourcesCompat;
+import androidx.core.graphics.ColorKt;
+import androidx.core.graphics.ColorUtils;
+import androidx.core.graphics.drawable.ColorDrawableKt;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -16,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,11 +46,12 @@ public class DefinitionFragment extends Fragment {
     private MeaningAdapter meaningAdapter;
     private List<Phonetic> phoneticList;
     private List<Meaning> meaningList;
-    private TextView word_text, meaning, appnameTV, phonetic_text;
+    private TextView word_text, meaning;
     private OnFetchDataListener onFetchDataListener;
     private LottieAnimationView progressBar;
     private Toolbar toolbar;
     private AppBarLayout appBarLayout;
+    private ImageButton phoneticBookmarkIcon;
 
 
     public DefinitionFragment() {
@@ -72,6 +79,16 @@ public class DefinitionFragment extends Fragment {
 
         progressBar = view.findViewById(R.id.progressBar);
         meaning = view.findViewById(R.id.meaning);
+        phoneticBookmarkIcon = view.findViewById(R.id.phonetic_bookmark_icon);
+        phoneticBookmarkIcon.setOnClickListener(view1 -> {
+            phoneticBookmarkIcon.setColorFilter(ResourcesCompat.getColor(getResources(), R.color.text_icon, null));
+
+            Bundle bundle = getArguments();
+            if (bundle != null) {
+                String word = bundle.getString("query");
+                Toast.makeText(getActivity(), word + " is added to Bookmarks!", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         phoneticList = new ArrayList<>();
         meaningList = new ArrayList<>();
@@ -229,6 +246,7 @@ public class DefinitionFragment extends Fragment {
             }
         }
     }
+
    @Override
    public void onDestroy() {
         super.onDestroy();

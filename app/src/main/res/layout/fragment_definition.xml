@@ -17,6 +17,15 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
+        <ImageButton
+            android:id="@+id/phonetic_bookmark_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@android:color/transparent"
+            android:contentDescription="@string/bookmark"
+            android:clickable="true"
+            android:src="@drawable/ic_bookmark_white_star" />
+
         <TextView
             android:id="@+id/word_text"
             android:layout_width="0dp"
@@ -35,21 +44,14 @@
             android:textStyle="bold"
             tools:ignore="RtlSymmetry,TextViewEdits" />
 
-        <ImageButton
-            android:id="@+id/phonetic_bookmark_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@android:color/transparent"
-            android:contentDescription="@string/bookmark"
-            android:src="@drawable/ic_bookmark_white_star" />
 
-        <ImageButton
-            android:id="@+id/phonetic_share_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@android:color/transparent"
-            android:contentDescription="@string/sharebtn"
-            android:src="@drawable/ic_baseline_share_24" />
+<!--        <ImageButton-->
+<!--            android:id="@+id/phonetic_share_icon"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:backgroundTint="@android:color/transparent"-->
+<!--            android:contentDescription="@string/sharebtn"-->
+<!--            android:src="@drawable/ic_baseline_share_24" />-->
 
     </LinearLayout>
 
