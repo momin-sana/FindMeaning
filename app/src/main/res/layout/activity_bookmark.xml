@@ -26,6 +26,4 @@
             android:scrollbars="vertical"/>
     </FrameLayout>
 
-
-
 </RelativeLayout>
