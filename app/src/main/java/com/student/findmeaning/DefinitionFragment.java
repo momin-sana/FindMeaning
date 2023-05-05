@@ -87,7 +87,7 @@ public class DefinitionFragment extends Fragment {
             if (bundle != null) {
                 String word = bundle.getString("query");
                 Toast.makeText(getActivity(), word + " is added to Bookmarks !", Toast.LENGTH_SHORT).show();
-//                add feature
+//                add feature DB TABLE
             }
         });
 
