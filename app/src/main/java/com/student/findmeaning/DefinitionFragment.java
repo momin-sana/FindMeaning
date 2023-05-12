@@ -28,8 +28,10 @@ import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.appbar.AppBarLayout;
+import com.student.findmeaning.Adapters.BookmarkAdapter;
 import com.student.findmeaning.Adapters.MeaningAdapter;
 import com.student.findmeaning.Adapters.PhoneticAdapter;
+import com.student.findmeaning.Models.BookmarkModel;
 import com.student.findmeaning.Models.DictionaryApiResponse;
 import com.student.findmeaning.Models.Meaning;
 import com.student.findmeaning.Models.Phonetic;
@@ -52,7 +54,9 @@ public class DefinitionFragment extends Fragment {
     private Toolbar toolbar;
     private AppBarLayout appBarLayout;
     private ImageButton phoneticBookmarkIcon;
-
+    private WordDBHandler dbHandler;
+    private BookmarkModel bookmarkModel;
+    private BookmarkAdapter bookmarkAdapter;
 
     public DefinitionFragment() {
         // Required empty public constructor
@@ -79,15 +83,39 @@ public class DefinitionFragment extends Fragment {
 
         progressBar = view.findViewById(R.id.progressBar);
         meaning = view.findViewById(R.id.meaning);
+
+        dbHandler = new WordDBHandler(this.getActivity());
+        List<BookmarkModel> bookmarkModelList = dbHandler.getAllBookmarks();
+        bookmarkAdapter = new BookmarkAdapter(bookmarkModelList, getActivity(), dbHandler);
+
         phoneticBookmarkIcon = view.findViewById(R.id.phonetic_bookmark_icon);
         phoneticBookmarkIcon.setOnClickListener(view1 -> {
-            phoneticBookmarkIcon.setColorFilter(ResourcesCompat.getColor(getResources(), R.color.text_icon, null));
-
             Bundle bundle = getArguments();
             if (bundle != null) {
                 String word = bundle.getString("query");
-                Toast.makeText(getActivity(), word + " is added to Bookmarks !", Toast.LENGTH_SHORT).show();
-//                COMMENT FROM DESKTOP
+                bookmarkModel = new BookmarkModel(word);
+
+                // Check if the word is already bookmarked
+                boolean isBookmarked = dbHandler.isWordBookmarked(word);
+                if(isBookmarked){
+                    // The icon is already bookmarked, so we need to remove it
+                    dbHandler.deleteWord(bookmarkModel.getId());
+                    phoneticBookmarkIcon.clearColorFilter();
+
+                    if (bookmarkAdapter != null){
+                        int position = bookmarkAdapter.getPosition(word);
+                        if (position != -1) {
+                            bookmarkAdapter.deleteWord(position, bookmarkModel.getId());
+                        }
+                    }
+
+                    Toast.makeText(getActivity(), word + " is removed from BookMarks", Toast.LENGTH_SHORT).show();
+                }else{
+                    // The icon is not bookmarked, so we need to add it
+                    dbHandler.addBookmark(bookmarkModel);
+                    phoneticBookmarkIcon.setColorFilter(ResourcesCompat.getColor(getResources(), R.color.text_icon, null));
+                    Toast.makeText(getActivity(), word + " is added to BookMarks", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
