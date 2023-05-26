@@ -137,6 +137,14 @@ public class WordDBHandler extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void deleteBookmark(){
+        SQLiteDatabase db = getWritableDatabase();
+        String whereClause = COLUMN_IS_BOOKMARK + " =? ";
+        String[] whereArg = {"1"};
+        int bookmarkDeleted = db.delete(TABLE_NAME,whereClause,whereArg);
+        Log.d("TAG", "deleteBookmark: " + bookmarkDeleted);
+    }
+
     public boolean isWordBookmarked(String word) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(TABLE_NAME,
@@ -152,5 +160,24 @@ public class WordDBHandler extends SQLiteOpenHelper {
         db.close();
 
         return isBookmarked;
+    }
+
+    public int getWordId(String word) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] columns = {COLUMN_ID};
+        String selection = COLUMN_WORD + " = ?";
+        String[] selectionArgs = {word};
+        Cursor cursor = db.query(TABLE_NAME, columns, selection, selectionArgs, null, null, null);
+
+
+        int wordId = -1;
+        if (cursor.moveToFirst()) {
+            wordId = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID));
+        }
+
+        cursor.close();
+        db.close();
+
+        return wordId;
     }
 }

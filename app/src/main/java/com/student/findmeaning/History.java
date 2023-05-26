@@ -30,9 +30,9 @@ public class History extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
 
+        deleteImageBtn = findViewById(R.id.action_bar_delete_history);
+        actionBarDeleteAll = findViewById(R.id.action_bar_delete_all_history);
         backImageBtn = findViewById(R.id.action_bar_back);
-        deleteImageBtn = findViewById(R.id.action_bar_delete);
-        actionBarDeleteAll = findViewById(R.id.action_bar_delete_all);
         textView_pgName = findViewById(R.id.page_name);
         textView_pgName.setText(R.string.history);
 
@@ -43,7 +43,12 @@ public class History extends AppCompatActivity {
 //       delete all mein sara data delete hoga
         actionBarDeleteAll.setOnClickListener(view -> Toast.makeText(this, "Delete All btn clicked", Toast.LENGTH_SHORT).show());
 
-        RecyclerView recyclerView = findViewById(R.id.history_recyclerView);
+
+            // TODO     holder.historyTVList.setOnClickListener(view -> {
+        //  When user clicks on text it should open definition fragment with its meaning.
+//                jo kaam searchview k click krne pe hoga wahi kaam yeha text k click krne pe hoga
+
+            RecyclerView recyclerView = findViewById(R.id.history_recyclerView);
         HistoryAdapter historyAdapter = new HistoryAdapter(History.this,historyData);
         recyclerView.setAdapter(historyAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));

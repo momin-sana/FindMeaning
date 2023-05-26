@@ -3,12 +3,19 @@ package com.student.findmeaning.Adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+
+import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.student.findmeaning.Models.BookmarkModel;
@@ -23,11 +30,22 @@ import java.util.List;
 public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkVH> {
     private List<BookmarkModel> bookmarkListData;
     private Context context;
+    private TextView tvEmpty;
     private final WordDBHandler dbHandler;
+    public BookmarkModel bookmarkModel;
+    private ArrayList<BookmarkModel> selectList=new ArrayList<BookmarkModel>();
+
+
 
     public BookmarkAdapter(List<BookmarkModel> bookmarkListData, Context context, WordDBHandler dbHandler) {
         this.bookmarkListData = bookmarkListData;
         this.context = context;
+        this.dbHandler = dbHandler;
+    }
+    public BookmarkAdapter(List<BookmarkModel> bookmarkListData, Context context, TextView tvEmpty, WordDBHandler dbHandler) {
+        this.bookmarkListData = bookmarkListData;
+        this.context = context;
+        this.tvEmpty = tvEmpty;
         this.dbHandler = dbHandler;
     }
 
@@ -39,13 +57,20 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkVH> {
 
     @Override
     public void onBindViewHolder(@NonNull BookmarkVH holder, int position) {
-        BookmarkModel bookmarkModel = bookmarkListData.get(position);
-        holder.bookmarkTVList.setText(bookmarkModel.getWord());
-        holder.itemView.setTag(bookmarkModel.getId());
+        BookmarkModel clickedItem = bookmarkListData.get(position);
+        holder.bookmarkTVList.setText(clickedItem.getWord());
+        Log.d("TAG", "BOOKMARKTVLIST: WORD = " + clickedItem.getWord());
+        holder.bookmarkCheckBox.setChecked(selectList.contains(bookmarkModel));   // add delete single or multi fuction here, onCheck feature
+        holder.itemView.setTag(clickedItem.getId());
 
-//        deleteWord(position, bookmarkModel.getId());
-
-        holder.bookmarkCheckBox.setChecked(false);   // add delete single or multi fuction here, onCheck feature
+        holder.bookmarkCheckBox.setOnClickListener(view -> {
+            if (holder.bookmarkCheckBox.isChecked()){
+                holder.bookmarkCheckBox.setChecked(true);
+                selectList.add(bookmarkModel);
+            }else {
+                selectList.remove(bookmarkModel);
+            }
+        });
 
         //        yeha dele ka kaam hogaa. checkbox k check krne pe identify hoga k checked items delete krne hain
 //        holder.deleteImageBtn.setOnClickListener(view -> //yeh and checkbox link hoga is btn k click krne pe checkbox ka option activate hoga/ ya visible hoga k select kro kon kon se word del krne hain
@@ -56,12 +81,27 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkVH> {
 //                Toast.makeText(context, "Delete All btn clicked", Toast.LENGTH_SHORT).show());
 
         holder.bookmarkTVList.setOnClickListener(view -> {
+            // TODO
 //                When user clicks on text it should open definition fragment with its meaning.
 //                jo kaam searchview k click krne pe hoga wahi kaam yeha text k click krne pe hoga
+                Toast.makeText(context, "clicked on: "+ clickedItem.getId() + ":" + clickedItem.getWord(), Toast.LENGTH_SHORT).show();
 
-            Toast.makeText(context, "clicked on: "+ bookmarkModel, Toast.LENGTH_SHORT).show();
+
+
         });
     }
+
+//    private void ClickItem(BookmarkVH holder) {
+//        BookmarkModel s = bookmarkListData.get(holder.getAdapterPosition());
+//        if (holder.bookmarkCheckBox.getVisibility() == View.GONE){
+//            holder.bookmarkCheckBox.setVisibility(View.VISIBLE);
+//            holder.itemView.setBackgroundColor(Color.LTGRAY);
+//            selectList.add(s);
+//        }else{
+//            holder.bookmarkCheckBox.setVisibility(View.GONE);
+//            selectList.remove(s);
+//        }
+//    }
 
     @Override
     public int getItemCount() {
@@ -79,20 +119,18 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkVH> {
         notifyDataSetChanged();
     }
 
-    public void deleteWord(int position, int wordId){
-        dbHandler.deleteWord(wordId);
+    public void deleteWords(int position){
+        ArrayList<Integer> ids = new ArrayList<>();
+        for (BookmarkModel bookmarkModel : selectList){
+            ids.add(bookmarkModel.getId());
+        }
+//        int wordId = bookmarkListData.get(position).getId();
+        dbHandler.deleteWord(position);
         bookmarkListData.remove(position);
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, bookmarkListData.size());
+        notifyDataSetChanged();
+        selectList.clear();
     }
 
-    public int getPosition(String word) {
-        for (int i = 0; i < bookmarkListData.size(); i++) {
-            BookmarkModel bookmark = bookmarkListData.get(i);
-            if (bookmark.getWord().equals(word)) {
-                return i;
-            }
-        }
-        return -1;
-    }
 }

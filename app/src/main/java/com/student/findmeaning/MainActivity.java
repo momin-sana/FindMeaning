@@ -5,6 +5,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -32,7 +34,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnFetchDataListener{
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
-    private ImageButton btnNavMenu;
+    private ImageButton btnNavMenu, phoneticBookmarkIcon;
     private NavigationView navigationView;
     private SearchView searchView;
     private TextView appnameTV;
@@ -53,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout = findViewById(R.id.drawer_layout);
         appnameTV = findViewById(R.id.appNameTV);
         searchView = findViewById(R.id.search_view);
+        phoneticBookmarkIcon = findViewById(R.id.phonetic_bookmark_icon);
 
         navigationView.setNavigationItemSelectedListener(this);
         btnNavMenu.setOnClickListener(view -> {
@@ -122,12 +125,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-
-                // Create a new instance of DefinitionFragment with arguments
                 definitionFragment = DefinitionFragment.newInstance();
                 bundle = new Bundle();
                 bundle.putString("query", query);
                 definitionFragment.setArguments(bundle);
+
+                //TODO add suggestion in search view
 
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager()
                         .beginTransaction()

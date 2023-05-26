@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <item
-            android:id="@+id/overflowMenu"
-            android:icon="@drawable/clear_all"
-            android:title=""
-            app:showAsAction="always">
-            <menu>
-                <item
-                    android:icon="@drawable/ic_baseline_delete_24"
-                    android:title="@string/delete_all_data"
-                    />
-            </menu>
-        </item>
+        android:id="@+id/menu_delete_all"
+        android:icon="@drawable/ic_baseline_delete_24"
+        android:title="@string/delete_all_data" />
+
+
+    <!--    <item-->
+<!--        android:id="@+id/overflowMenu"-->
+<!--        android:icon="@drawable/clear_all"-->
+<!--        android:title=""-->
+<!--        app:showAsAction="always">-->
+<!--        <menu>-->
+<!--           </menu>-->
+<!--    </item>-->
 </menu>

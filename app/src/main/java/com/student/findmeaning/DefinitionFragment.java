@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.graphics.ColorKt;
 import androidx.core.graphics.ColorUtils;
@@ -15,6 +16,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,9 +57,10 @@ public class DefinitionFragment extends Fragment {
     private Toolbar toolbar;
     private AppBarLayout appBarLayout;
     private ImageButton phoneticBookmarkIcon;
-    private WordDBHandler dbHandler;
-    private BookmarkModel bookmarkModel;
     private BookmarkAdapter bookmarkAdapter;
+    private BookmarkModel bookmarkModel;
+    private WordDBHandler dbHandler;
+
 
     public DefinitionFragment() {
         // Required empty public constructor
@@ -64,8 +68,10 @@ public class DefinitionFragment extends Fragment {
 
     public static  DefinitionFragment newInstance(){return new DefinitionFragment();}
 
+
     @Override
     public void onAttach(@NonNull Context context) {
+ //    ensure that the hosting activity(MainActivity) implements the OnFetchDataListener interface and sets up the communication between the fragment and the hosting activity through this interface.
         super.onAttach(context);
         if (context instanceof OnFetchDataListener){
             onFetchDataListener = (OnFetchDataListener) context;
@@ -84,41 +90,6 @@ public class DefinitionFragment extends Fragment {
         progressBar = view.findViewById(R.id.progressBar);
         meaning = view.findViewById(R.id.meaning);
 
-        dbHandler = new WordDBHandler(this.getActivity());
-        List<BookmarkModel> bookmarkModelList = dbHandler.getAllBookmarks();
-        bookmarkAdapter = new BookmarkAdapter(bookmarkModelList, getActivity(), dbHandler);
-
-        phoneticBookmarkIcon = view.findViewById(R.id.phonetic_bookmark_icon);
-        phoneticBookmarkIcon.setOnClickListener(view1 -> {
-            Bundle bundle = getArguments();
-            if (bundle != null) {
-                String word = bundle.getString("query");
-                bookmarkModel = new BookmarkModel(word);
-
-                // Check if the word is already bookmarked
-                boolean isBookmarked = dbHandler.isWordBookmarked(word);
-                if(isBookmarked){
-                    // The icon is already bookmarked, so we need to remove it
-                    dbHandler.deleteWord(bookmarkModel.getId());
-                    phoneticBookmarkIcon.clearColorFilter();
-
-                    if (bookmarkAdapter != null){
-                        int position = bookmarkAdapter.getPosition(word);
-                        if (position != -1) {
-                            bookmarkAdapter.deleteWord(position, bookmarkModel.getId());
-                        }
-                    }
-
-                    Toast.makeText(getActivity(), word + " is removed from BookMarks", Toast.LENGTH_SHORT).show();
-                }else{
-                    // The icon is not bookmarked, so we need to add it
-                    dbHandler.addBookmark(bookmarkModel);
-                    phoneticBookmarkIcon.setColorFilter(ResourcesCompat.getColor(getResources(), R.color.text_icon, null));
-                    Toast.makeText(getActivity(), word + " is added to BookMarks", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
         phoneticList = new ArrayList<>();
         meaningList = new ArrayList<>();
 
@@ -127,6 +98,40 @@ public class DefinitionFragment extends Fragment {
         phoneticAdapter = new PhoneticAdapter(getContext(),phoneticList);
         phonetic_recyclerView.setAdapter(phoneticAdapter);
 
+        dbHandler = new WordDBHandler(this.getActivity());
+
+        phoneticBookmarkIcon = view.findViewById(R.id.phonetic_bookmark_icon);
+
+        // if word is already bookmark setColor of BookmarkIcon.
+        Bundle bundle = getArguments();
+        String wordInBookmark = bundle.getString("query");
+
+        boolean isBookmarkAlready = dbHandler.isWordBookmarked(wordInBookmark);
+        if (isBookmarkAlready){
+            phoneticBookmarkIcon.setColorFilter(ContextCompat.getColor(getActivity(), R.color.text_icon));
+        }
+
+        phoneticBookmarkIcon.setOnClickListener(view1 -> {
+            if (bundle != null) {
+                String word = bundle.getString("query");
+                // Check if the word is already bookmarked
+                boolean isBookmarked = dbHandler.isWordBookmarked(word);
+                if (isBookmarked) {
+                    // The word is already bookmarked, so we need to remove it
+                    int wordInt = dbHandler.getWordId(word);
+                    Log.d("WordID", "" + wordInt);
+                    dbHandler.deleteWord(wordInt);
+                    phoneticBookmarkIcon.setColorFilter(null);
+                    Toast.makeText(getActivity(), word + " is removed from Bookmarks", Toast.LENGTH_SHORT).show();
+                } else {
+                    bookmarkModel = new BookmarkModel(word);
+                    // The word is not bookmarked, so we need to add it
+                    dbHandler.addBookmark(bookmarkModel);
+                    phoneticBookmarkIcon.setColorFilter(ResourcesCompat.getColor(getResources(), R.color.text_icon, null));
+                    Toast.makeText(getActivity(), word + " is added to Bookmarks", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
         meaning_recyclerView = view.findViewById(R.id.meaning_recyclerView);
         meaning_recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         meaningAdapter = new MeaningAdapter(getContext(), meaningList);
@@ -239,6 +244,7 @@ public class DefinitionFragment extends Fragment {
                 if (response.body() != null && response.isSuccessful()){
                     List<DictionaryApiResponse> dictionaryApiResponseList = response.body();
                     onFetchDataListener.onFetchData(dictionaryApiResponseList.get(0), word);
+                    // TODO add query word to history db
                 }else {
                     AlertDialog alertDialog = new AlertDialog.Builder(requireContext())
                             .setTitle("Unable to fetch data from API")

@@ -7,7 +7,6 @@ import android.media.MediaPlayer;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -32,7 +31,12 @@ public class PhoneticAdapter extends RecyclerView.Adapter<PhoneticVH> {
             if (i != TextToSpeech.SUCCESS) {
                 Log.e("PhoneticAdapter", "Error initializing TTS");
             }else{
-                textToSpeech.setLanguage(Locale.ENGLISH);
+//                textToSpeech.setLanguage(Locale.ENGLISH);
+                int result = textToSpeech.setLanguage(Locale.ENGLISH);
+                if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                    Log.e("PhoneticAdapter", "Language not supported");
+                }
+
             }
         });
 //        constructor calls the setData() method to filter the data and display only the data that has both audio and text.

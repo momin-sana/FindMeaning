@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal">
 
     <androidx.appcompat.widget.Toolbar
@@ -11,7 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/button_default"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar">
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        tools:ignore="MissingConstraints">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -42,36 +43,104 @@
                 tools:ignore="RtlHardcoded"
                 tools:targetApi="p" />
 
+
+            <!-- Delete icon for BOOKMARK -->
             <ImageButton
-                android:id="@+id/action_bar_delete"
+                android:id="@+id/action_bar_delete_bookmark"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_baseline_delete_24"
                 android:padding="10dp"
-                android:layout_weight="0.25"
-                android:layout_gravity="center_vertical"
                 android:background="@android:color/transparent"
-                android:contentDescription="@string/delete_all" />
+                android:contentDescription="@string/delete_all"
+                android:visibility="gone"
+                android:saveEnabled="false"
+                android:layout_weight="0.25"
+                app:layout_constraintStart_toEndOf="@id/action_bar_back"
+                app:layout_constraintTop_toTopOf="@id/toolbar"
+                app:layout_constraintBottom_toBottomOf="@id/toolbar" />
 
+            <!-- Delete icon for History -->
             <ImageButton
-                android:id="@+id/action_bar_delete_all"
+                android:id="@+id/action_bar_delete_history"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_delete_24"
+                android:padding="10dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/delete_all"
+                android:visibility="gone"
+                android:saveEnabled="false"
+                android:layout_weight="0.25"
+                app:layout_constraintStart_toEndOf="@id/action_bar_back"
+                app:layout_constraintTop_toTopOf="@id/toolbar"
+                app:layout_constraintBottom_toBottomOf="@id/toolbar" />
+
+            <!-- Delete icon for Notes -->
+            <ImageButton
+                android:id="@+id/action_bar_delete_notes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_delete_24"
+                android:padding="10dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/delete_all"
+                android:visibility="gone"
+                android:saveEnabled="false"
+                android:layout_weight="0.25"
+                app:layout_constraintStart_toEndOf="@id/action_bar_back"
+                app:layout_constraintTop_toTopOf="@id/toolbar"
+                app:layout_constraintBottom_toBottomOf="@id/toolbar" />
+
+            <!-- Bar icon for bookmark -->
+            <ImageButton
+                android:id="@+id/action_bar_delete_all_bookmark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/delete_all"
+                android:padding="10dp"
+                android:paddingEnd="0dp"
+                android:src="@drawable/clear_all"
+                android:visibility="gone"
+                android:layout_weight="0.25"
+                app:layout_constraintBottom_toBottomOf="@id/toolbar"
+                app:layout_constraintStart_toEndOf="@id/action_bar_delete_bookmark"
+                app:layout_constraintTop_toTopOf="@id/toolbar"
+                tools:ignore="RtlSymmetry" />
+
+            <!-- Bar icon for history -->
+            <ImageButton
+                android:id="@+id/action_bar_delete_all_history"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/clear_all"
                 android:padding="10dp"
-                android:layout_weight="0.25"
-                android:layout_gravity="center_vertical"
                 android:background="@android:color/transparent"
-                android:contentDescription="@string/delete_all"/>
+                android:contentDescription="@string/delete_all"
+                android:visibility="gone"
+                android:layout_weight="0.25"
+                app:layout_constraintStart_toEndOf="@id/action_bar_delete_history"
+                app:layout_constraintTop_toTopOf="@id/toolbar"
+                app:layout_constraintBottom_toBottomOf="@id/toolbar" />
+
+            <!-- Bar icon for notes -->
+            <ImageButton
+                android:id="@+id/action_bar_delete_all_notes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/clear_all"
+                android:padding="10dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/delete_all"
+                android:visibility="gone"
+                android:layout_weight="0.25"
+                app:layout_constraintStart_toEndOf="@id/action_bar_delete_notes"
+                app:layout_constraintTop_toTopOf="@id/toolbar"
+                app:layout_constraintBottom_toBottomOf="@id/toolbar" />
 
         </LinearLayout>
 
     </androidx.appcompat.widget.Toolbar>
 
-<!--    <View-->
-<!--        android:id="@+id/shadow_view"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="5dp"-->
-<!--        android:background="@drawable/dropshadow" />-->
-
-</TableLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
