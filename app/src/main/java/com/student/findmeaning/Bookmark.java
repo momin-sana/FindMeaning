@@ -7,8 +7,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -19,9 +17,8 @@ import com.student.findmeaning.Models.BookmarkModel;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
-public class Bookmark extends AppCompatActivity {
+public class Bookmark extends AppCompatActivity implements OnBookmarkItemClickListener{
     private TextView textView_pgName,tvEmpty;
     private ImageButton backImageBtn, deleteAllBookmark, deleteBookmark;
     private ArrayList<BookmarkModel> bookmarkModelArrayList = new ArrayList<>();
@@ -30,10 +27,6 @@ public class Bookmark extends AppCompatActivity {
     RecyclerView recyclerView;
 
     public Bookmark(){ }
-//    public Bookmark(ArrayList<BookmarkModel> bookmarkModelArrayList, WordDBHandler dbHandler) {
-//        this.bookmarkModelArrayList = bookmarkModelArrayList;
-//        this.dbHandler = dbHandler;
-//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,16 +45,24 @@ public class Bookmark extends AppCompatActivity {
 
         backImageBtn.setOnClickListener(view -> onBackPressed());
 
-        //         display db in list
-        dbHandler = new WordDBHandler(getApplicationContext());
-        bookmarkModelArrayList = new ArrayList<>();
-        bookmarkAdapter = new BookmarkAdapter(bookmarkModelArrayList, getApplicationContext(), dbHandler);
+        // Initialize the RecyclerView
         recyclerView = findViewById(R.id.bookmark_recyclerView);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(bookmarkAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
-        // add new bookmarks
+        // Create the adapter
+        bookmarkAdapter = new BookmarkAdapter(bookmarkModelArrayList, getApplicationContext(), dbHandler);
+        bookmarkAdapter.setOnItemClickListener(this::onItemClick);
+
+        // Set the adapter on the RecyclerView
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(bookmarkAdapter);
+
+
+        //        Create DBHandler and new bookmarkList
+        dbHandler = new WordDBHandler(getApplicationContext());
+        bookmarkModelArrayList = new ArrayList<>();
+
+        // add new bookmarks and  display db in list
         bookmarkModelArrayList = (ArrayList<BookmarkModel>) dbHandler.getAllBookmarks();
         Collections.reverse(bookmarkModelArrayList);
         bookmarkAdapter.setDataChangedBookmark(bookmarkModelArrayList);
@@ -87,6 +88,13 @@ public class Bookmark extends AppCompatActivity {
             popupMenu.show();
         });
 
+    }
+
+    @Override
+    public void onItemClick(String word) {
+        Intent intent = new Intent(Bookmark.this, MainActivity.class);
+        intent.putExtra("word", word);
+        startActivity(intent);
     }
 
 }

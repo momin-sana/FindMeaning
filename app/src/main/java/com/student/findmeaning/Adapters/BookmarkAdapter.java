@@ -4,18 +4,13 @@ package com.student.findmeaning.Adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 
-import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.student.findmeaning.Models.BookmarkModel;
@@ -31,10 +26,10 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkVH> {
     private List<BookmarkModel> bookmarkListData;
     private Context context;
     private TextView tvEmpty;
-    private final WordDBHandler dbHandler;
+    private WordDBHandler dbHandler;
     public BookmarkModel bookmarkModel;
-    private ArrayList<BookmarkModel> selectList=new ArrayList<BookmarkModel>();
-
+    private ArrayList<BookmarkModel> selectList=new ArrayList<>();
+    private OnItemClickListener clickListener;
 
 
     public BookmarkAdapter(List<BookmarkModel> bookmarkListData, Context context, WordDBHandler dbHandler) {
@@ -49,6 +44,13 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkVH> {
         this.dbHandler = dbHandler;
     }
 
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.clickListener = listener;
+    }
+    public interface OnItemClickListener {
+        void onItemClick(String word);
+    }
+
     @NonNull
     @Override
     public BookmarkVH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -58,6 +60,7 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkVH> {
     @Override
     public void onBindViewHolder(@NonNull BookmarkVH holder, int position) {
         BookmarkModel clickedItem = bookmarkListData.get(position);
+
         holder.bookmarkTVList.setText(clickedItem.getWord());
         Log.d("TAG", "BOOKMARKTVLIST: WORD = " + clickedItem.getWord());
         holder.bookmarkCheckBox.setChecked(selectList.contains(bookmarkModel));   // add delete single or multi fuction here, onCheck feature
@@ -84,10 +87,11 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkVH> {
             // TODO
 //                When user clicks on text it should open definition fragment with its meaning.
 //                jo kaam searchview k click krne pe hoga wahi kaam yeha text k click krne pe hoga
+               String word = clickedItem.getWord();
                 Toast.makeText(context, "clicked on: "+ clickedItem.getId() + ":" + clickedItem.getWord(), Toast.LENGTH_SHORT).show();
-
-
-
+                if (clickListener != null){
+                    clickListener.onItemClick(word);
+                }
         });
     }
 
@@ -114,11 +118,13 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkVH> {
 
     @SuppressLint("NotifyDataSetChanged")
     public void setDataChangedBookmark(ArrayList<BookmarkModel> bookmarkListData){
+        dbHandler = new WordDBHandler(context);
        dbHandler.getAllBookmarks();
         this.bookmarkListData = bookmarkListData;
         notifyDataSetChanged();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void deleteWords(int position){
         ArrayList<Integer> ids = new ArrayList<>();
         for (BookmarkModel bookmarkModel : selectList){

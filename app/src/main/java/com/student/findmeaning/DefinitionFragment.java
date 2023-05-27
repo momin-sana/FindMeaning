@@ -66,7 +66,14 @@ public class DefinitionFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static  DefinitionFragment newInstance(){return new DefinitionFragment();}
+    public static  DefinitionFragment newInstance(String queryOrBookmarkedrHistory){
+        DefinitionFragment definitionFragment = new DefinitionFragment();
+        Bundle arguments = new Bundle();
+        arguments.putString("query", queryOrBookmarkedrHistory);
+        arguments.putString("wordbookmarked",queryOrBookmarkedrHistory);
+        definitionFragment.setArguments(arguments);
+        return definitionFragment;
+    }
 
 
     @Override
@@ -102,13 +109,22 @@ public class DefinitionFragment extends Fragment {
 
         phoneticBookmarkIcon = view.findViewById(R.id.phonetic_bookmark_icon);
 
-        // if word is already bookmark setColor of BookmarkIcon.
-        Bundle bundle = getArguments();
-        String wordInBookmark = bundle.getString("query");
 
-        boolean isBookmarkAlready = dbHandler.isWordBookmarked(wordInBookmark);
-        if (isBookmarkAlready){
-            phoneticBookmarkIcon.setColorFilter(ContextCompat.getColor(getActivity(), R.color.text_icon));
+        Bundle bundle = getArguments();
+        String wordFromBookmark = null;
+        String wordInBookmark = null;
+        if (bundle != null) {
+            wordFromBookmark = bundle.getString("wordbookmarked");
+            wordInBookmark = bundle.getString("query");
+            fetchWordData(wordFromBookmark);
+        }
+
+// Check if wordInBookmark is null before using it
+        if (wordInBookmark != null) {
+            boolean isBookmarkAlready = dbHandler.isWordBookmarked(wordInBookmark);
+            if (isBookmarkAlready) {
+                phoneticBookmarkIcon.setColorFilter(ContextCompat.getColor(getActivity(), R.color.text_icon));
+            }
         }
 
         phoneticBookmarkIcon.setOnClickListener(view1 -> {

@@ -25,13 +25,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
+import com.student.findmeaning.Adapters.BookmarkAdapter;
 import com.student.findmeaning.Models.DictionaryApiResponse;
 import com.student.findmeaning.Models.Meaning;
 import com.student.findmeaning.Models.Phonetic;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnFetchDataListener{
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnFetchDataListener, BookmarkAdapter.OnItemClickListener {
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private ImageButton btnNavMenu, phoneticBookmarkIcon;
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private TextView appnameTV;
     public Bundle bundle;
     private DefinitionFragment definitionFragment;
+    String clickedWord;
 
 
     @Override
@@ -64,15 +66,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             searchView.setIconified(true);
         });
 
+        Bundle extras = getIntent().getExtras();
+        if (extras != null){
+            clickedWord = extras.getString("wordbookmarked");
+        }
+        if (clickedWord != null){
+           onItemClick(clickedWord);
+        }else{
+            MainFragment mainFragment = new MainFragment();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, mainFragment)
+                    .commit();
+        }
         setSearchViewListener();
+//        getRetrievedWordFromBookmark();
 
-        MainFragment mainFragment = new MainFragment();
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.popBackStack();
-        fragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, mainFragment)
-                .addToBackStack("MainFragment")
-                .commit();
 
     }
 
@@ -125,7 +134,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                definitionFragment = DefinitionFragment.newInstance();
+                definitionFragment = DefinitionFragment.newInstance(query);
                 bundle = new Bundle();
                 bundle.putString("query", query);
                 definitionFragment.setArguments(bundle);
@@ -179,4 +188,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     .commit();
         }else{super.onBackPressed();}
     }
+
+    @Override
+    public void onItemClick(String wordFromBookmark) {
+        definitionFragment = DefinitionFragment.newInstance(wordFromBookmark);
+        bundle = new Bundle();
+        bundle.putString("wordbookmarked", wordFromBookmark);
+        definitionFragment.setArguments(bundle);
+
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, definitionFragment);
+        fragmentTransaction.commit();
+
+        definitionFragment.fetchWordData(wordFromBookmark);
+    }
+
 }
