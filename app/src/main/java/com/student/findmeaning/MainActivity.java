@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,7 +33,7 @@ import com.student.findmeaning.Models.Phonetic;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnFetchDataListener, BookmarkAdapter.OnItemClickListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnFetchDataListener {
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private ImageButton btnNavMenu, phoneticBookmarkIcon;
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private TextView appnameTV;
     public Bundle bundle;
     private DefinitionFragment definitionFragment;
-    String clickedWord;
+    String bookmarkQuery;
 
 
     @Override
@@ -57,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout = findViewById(R.id.drawer_layout);
         appnameTV = findViewById(R.id.appNameTV);
         searchView = findViewById(R.id.search_view);
+
         phoneticBookmarkIcon = findViewById(R.id.phonetic_bookmark_icon);
 
         navigationView.setNavigationItemSelectedListener(this);
@@ -66,24 +68,74 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             searchView.setIconified(true);
         });
 
+        MainFragment mainFragment = new MainFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, mainFragment)
+                .commit();
+
+
+        // Retrieve the bookmarkQuery from the intent
         Bundle extras = getIntent().getExtras();
-        if (extras != null){
-            clickedWord = extras.getString("wordbookmarked");
+        if (extras != null && extras.containsKey("bookmarkQuery")) {
+            searchView.setIconified(true);
+            appnameTV.setVisibility(View.VISIBLE);
+            bookmarkQuery = extras.getString("bookmarkQuery");
+            Log.d("Main Activity= ", "onCreate: BookmarQuery: "+ bookmarkQuery);
+            setSearchBookmarkQueryListener();
         }
-        if (clickedWord != null){
-           onItemClick(clickedWord);
+
+        if (bookmarkQuery != null && !bookmarkQuery.isEmpty()){
+            searchView.setQuery(bookmarkQuery, true);
+            searchView.clearFocus();
+            setSreachFromBookmark();
         }else{
-            MainFragment mainFragment = new MainFragment();
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, mainFragment)
-                    .commit();
+            setSearchViewListener();
         }
-        setSearchViewListener();
-//        getRetrievedWordFromBookmark();
-
-
     }
+
+    private void setSreachFromBookmark() {
+        searchView.setOnQueryTextFocusChangeListener((view, hasFocus) -> {
+            if (hasFocus || searchView.getQuery().length() > 0) {
+                if (searchView.getVisibility() == View.VISIBLE) {
+                    setSearchBookmarkQueryListener();
+                    appnameTV.setVisibility(View.INVISIBLE);
+                }
+            } else {
+                appnameTV.setVisibility(View.VISIBLE);
+                searchView.setIconified(true);
+            }
+        });
+    }
+
+    private void setSearchBookmarkQueryListener() {
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String bookmarkQuery) {
+                definitionFragment = DefinitionFragment.newInstance(bookmarkQuery);
+                bundle = new Bundle();
+                bundle.putString("bookmarkQuery", bookmarkQuery);
+                definitionFragment.setArguments(bundle);
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, definitionFragment);
+                fragmentTransaction.commit();
+
+                definitionFragment.fetchWordData(bookmarkQuery);
+
+                searchView.setIconified(true);
+                searchView.clearFocus();
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+        searchView.setBackgroundResource(R.drawable.button_background);
+    }
+
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -189,19 +241,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }else{super.onBackPressed();}
     }
 
-    @Override
-    public void onItemClick(String wordFromBookmark) {
-        definitionFragment = DefinitionFragment.newInstance(wordFromBookmark);
-        bundle = new Bundle();
-        bundle.putString("wordbookmarked", wordFromBookmark);
-        definitionFragment.setArguments(bundle);
 
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragment_container, definitionFragment);
-        fragmentTransaction.commit();
-
-        definitionFragment.fetchWordData(wordFromBookmark);
-    }
 
 }

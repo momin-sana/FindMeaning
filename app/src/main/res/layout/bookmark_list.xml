@@ -14,6 +14,7 @@
         android:id="@+id/regularLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/light_blue_background"
         android:padding="10dp">
 
         <TextView
@@ -24,8 +25,9 @@
             android:layout_centerVertical="true"
             android:textAllCaps="false"
             android:textColor="@color/button_default"
-            android:paddingStart="2dp"
-            android:textSize="20sp"
+            android:paddingStart="6dp"
+            android:padding="5dp"
+            android:textSize="22sp"
             android:textStyle="italic"
             android:fontFamily="serif"
             android:clickable="true"
@@ -38,6 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
             android:buttonTint="@drawable/checkbox_state" />
 
 

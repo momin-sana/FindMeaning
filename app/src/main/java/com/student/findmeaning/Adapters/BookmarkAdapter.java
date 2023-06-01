@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.student.findmeaning.Models.BookmarkModel;
+import com.student.findmeaning.OnBookmarkItemClickListener;
 import com.student.findmeaning.R;
 import com.student.findmeaning.ViewHolders.BookmarkVH;
 import com.student.findmeaning.WordDBHandler;
@@ -29,7 +30,7 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkVH> {
     private WordDBHandler dbHandler;
     public BookmarkModel bookmarkModel;
     private ArrayList<BookmarkModel> selectList=new ArrayList<>();
-    private OnItemClickListener clickListener;
+    public OnBookmarkItemClickListener clickListener;
 
 
     public BookmarkAdapter(List<BookmarkModel> bookmarkListData, Context context, WordDBHandler dbHandler) {
@@ -44,12 +45,10 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkVH> {
         this.dbHandler = dbHandler;
     }
 
-    public void setOnItemClickListener(OnItemClickListener listener) {
+    public void setOnItemClickListener(OnBookmarkItemClickListener listener) {
         this.clickListener = listener;
     }
-    public interface OnItemClickListener {
-        void onItemClick(String word);
-    }
+
 
     @NonNull
     @Override
@@ -62,7 +61,6 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkVH> {
         BookmarkModel clickedItem = bookmarkListData.get(position);
 
         holder.bookmarkTVList.setText(clickedItem.getWord());
-        Log.d("TAG", "BOOKMARKTVLIST: WORD = " + clickedItem.getWord());
         holder.bookmarkCheckBox.setChecked(selectList.contains(bookmarkModel));   // add delete single or multi fuction here, onCheck feature
         holder.itemView.setTag(clickedItem.getId());
 
@@ -84,11 +82,7 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkVH> {
 //                Toast.makeText(context, "Delete All btn clicked", Toast.LENGTH_SHORT).show());
 
         holder.bookmarkTVList.setOnClickListener(view -> {
-            // TODO
-//                When user clicks on text it should open definition fragment with its meaning.
-//                jo kaam searchview k click krne pe hoga wahi kaam yeha text k click krne pe hoga
                String word = clickedItem.getWord();
-                Toast.makeText(context, "clicked on: "+ clickedItem.getId() + ":" + clickedItem.getWord(), Toast.LENGTH_SHORT).show();
                 if (clickListener != null){
                     clickListener.onItemClick(word);
                 }
@@ -130,7 +124,6 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkVH> {
         for (BookmarkModel bookmarkModel : selectList){
             ids.add(bookmarkModel.getId());
         }
-//        int wordId = bookmarkListData.get(position).getId();
         dbHandler.deleteWord(position);
         bookmarkListData.remove(position);
         notifyItemRemoved(position);

@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.student.findmeaning.Models.BookmarkModel;
 import com.student.findmeaning.Models.History;
@@ -47,7 +48,11 @@ public class WordDBHandler extends SQLiteOpenHelper {
     public void addBookmark(BookmarkModel bookmarkModel) {
         SQLiteDatabase db = this.getWritableDatabase();
         // Check if the same word already exists in the table
-        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_WORD + "=?", new String[]{bookmarkModel.getWord()});
+        String word = bookmarkModel.getWord();
+        if (word == null) {
+            return;
+        }
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_WORD + "=?", new String[]{word});
         if (cursor.getCount() > 0) {
             cursor.close();
             db.close();
@@ -146,6 +151,10 @@ public class WordDBHandler extends SQLiteOpenHelper {
     }
 
     public boolean isWordBookmarked(String word) {
+        if (word == null) {
+            // Handle the null case
+            return false; // Return a default value or show an error message
+        }
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(TABLE_NAME,
                 null,

@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -51,7 +52,7 @@ public class Bookmark extends AppCompatActivity implements OnBookmarkItemClickLi
 
         // Create the adapter
         bookmarkAdapter = new BookmarkAdapter(bookmarkModelArrayList, getApplicationContext(), dbHandler);
-        bookmarkAdapter.setOnItemClickListener(this::onItemClick);
+        bookmarkAdapter.setOnItemClickListener(this);
 
         // Set the adapter on the RecyclerView
         recyclerView.setHasFixedSize(true);
@@ -91,10 +92,11 @@ public class Bookmark extends AppCompatActivity implements OnBookmarkItemClickLi
     }
 
     @Override
-    public void onItemClick(String word) {
+    public void onItemClick(String wordFromBookmark) {
         Intent intent = new Intent(Bookmark.this, MainActivity.class);
-        intent.putExtra("word", word);
+        intent.putExtra("bookmarkQuery", wordFromBookmark);
         startActivity(intent);
+        Log.d("Bookmark= ", "onItemClick: "+ wordFromBookmark);
     }
 
 }

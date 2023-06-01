@@ -1,5 +1,5 @@
 package com.student.findmeaning;
 
 public interface OnBookmarkItemClickListener {
-    void onItemClick(String word);
+    void onItemClick(String wordFromBookmark);
 }
