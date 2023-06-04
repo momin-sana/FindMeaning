@@ -58,7 +58,6 @@ public class Bookmark extends AppCompatActivity implements OnBookmarkItemClickLi
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(bookmarkAdapter);
 
-
         //        Create DBHandler and new bookmarkList
         dbHandler = new WordDBHandler(getApplicationContext());
         bookmarkModelArrayList = new ArrayList<>();
@@ -91,12 +90,13 @@ public class Bookmark extends AppCompatActivity implements OnBookmarkItemClickLi
 
     }
 
+
+//    calling onItemClick from bookmarkAdapter to navigative to mainActivity and pass value     //navigation from list word to definition Fragment -- 3
     @Override
     public void onItemClick(String wordFromBookmark) {
         Intent intent = new Intent(Bookmark.this, MainActivity.class);
         intent.putExtra("bookmarkQuery", wordFromBookmark);
         startActivity(intent);
-        Log.d("Bookmark= ", "onItemClick: "+ wordFromBookmark);
     }
 
 }

@@ -53,7 +53,6 @@ public class DefinitionFragment extends Fragment {
     private Toolbar toolbar;
     private AppBarLayout appBarLayout;
     private ImageButton phoneticBookmarkIcon;
-    private BookmarkAdapter bookmarkAdapter;
     private BookmarkModel bookmarkModel;
     private WordDBHandler dbHandler;
 
@@ -104,6 +103,7 @@ public class DefinitionFragment extends Fragment {
         dbHandler = new WordDBHandler(this.getActivity());
 
         phoneticBookmarkIcon = view.findViewById(R.id.phonetic_bookmark_icon);
+        phoneticBookmarkIcon.setVisibility(View.INVISIBLE);
 
         meaning_recyclerView = view.findViewById(R.id.meaning_recyclerView);
         meaning_recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -131,6 +131,7 @@ public class DefinitionFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         word_text = view.findViewById(R.id.word_text);
+        word_text.setVisibility(View.INVISIBLE);
 
         Bundle bundle = getArguments();
         if (bundle != null) {
@@ -211,7 +212,6 @@ public class DefinitionFragment extends Fragment {
                 }
             }
         }
-
         showProgressBar(true);
 
         Call<List<DictionaryApiResponse>> call = RetrofitClientManager.getInstance().getApi().getWordDefinition(word);
@@ -220,6 +220,8 @@ public class DefinitionFragment extends Fragment {
             public void onResponse(@NonNull Call<List<DictionaryApiResponse>> call, @NonNull Response<List<DictionaryApiResponse>> response) {
                 showProgressBar(false);
                 meaning.setVisibility(View.VISIBLE);
+                phoneticBookmarkIcon.setVisibility(View.VISIBLE);
+                word_text.setVisibility(View.VISIBLE);
 
                 if (response.body() != null && response.isSuccessful()){
 

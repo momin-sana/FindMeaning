@@ -74,10 +74,7 @@ public class PhoneticAdapter extends RecyclerView.Adapter<PhoneticVH> {
                 player.setAudioAttributes(audioAttributes);
                 player.setDataSource(audioUrl);
                 player.setOnPreparedListener(MediaPlayer::start);
-                player.setOnErrorListener((mediaPlayer, i, i1) -> {
-                    Log.e("PhoneticAdapter", "Error playing audio: " + i);
-                    return true;
-                });
+                player.setOnErrorListener((mediaPlayer, i, i1) -> true);
                 player.prepareAsync();
                 player.start();
             } catch (IOException e) {

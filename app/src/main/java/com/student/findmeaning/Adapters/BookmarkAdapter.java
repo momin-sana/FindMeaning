@@ -3,23 +3,16 @@ package com.student.findmeaning.Adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.student.findmeaning.Models.BookmarkModel;
 import com.student.findmeaning.OnBookmarkItemClickListener;
 import com.student.findmeaning.R;
 import com.student.findmeaning.ViewHolders.BookmarkVH;
 import com.student.findmeaning.WordDBHandler;
-
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,8 +52,9 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkVH> {
     @Override
     public void onBindViewHolder(@NonNull BookmarkVH holder, int position) {
         BookmarkModel clickedItem = bookmarkListData.get(position);
-
-        holder.bookmarkTVList.setText(clickedItem.getWord());
+        String clickedWord = clickedItem.getWord();
+        String text = clickedWord.toLowerCase();
+        holder.bookmarkTVList.setText(text);
         holder.bookmarkCheckBox.setChecked(selectList.contains(bookmarkModel));   // add delete single or multi fuction here, onCheck feature
         holder.itemView.setTag(clickedItem.getId());
 
@@ -76,14 +70,12 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkVH> {
         //        yeha dele ka kaam hogaa. checkbox k check krne pe identify hoga k checked items delete krne hain
 //        holder.deleteImageBtn.setOnClickListener(view -> //yeh and checkbox link hoga is btn k click krne pe checkbox ka option activate hoga/ ya visible hoga k select kro kon kon se word del krne hain
 //                Toast.makeText(context, "Delete btn clicked", Toast.LENGTH_SHORT).show());
-//
-//        //       delete all mein sara data delete hoga
-//        holder.actionBarDeleteAll.setOnClickListener(view ->
-//                Toast.makeText(context, "Delete All btn clicked", Toast.LENGTH_SHORT).show());
 
+//         navigation from list word to definition Fragment -- 2
         holder.bookmarkTVList.setOnClickListener(view -> {
                String word = clickedItem.getWord();
                 if (clickListener != null){
+//                    onclick from interface Class
                     clickListener.onItemClick(word);
                 }
         });

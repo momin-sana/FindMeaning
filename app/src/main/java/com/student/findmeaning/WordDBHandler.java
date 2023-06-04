@@ -158,7 +158,7 @@ public class WordDBHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(TABLE_NAME,
                 null,
-                COLUMN_WORD + " = ? AND " + COLUMN_IS_BOOKMARK + " = ?",
+                COLUMN_WORD + " = ? COLLATE NOCASE AND " + COLUMN_IS_BOOKMARK + " = ?",
                 new String[]{word, "1"},
                 null,
                 null,

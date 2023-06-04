@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 .commit();
 
 
-        // Retrieve the bookmarkQuery from the intent
+        // Retrieve the bookmarkQuery from the intent    //navigation from list word to definition Fragment -- 4
         Bundle extras = getIntent().getExtras();
         if (extras != null && extras.containsKey("bookmarkQuery")) {
             searchView.setIconified(true);
@@ -84,7 +84,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Log.d("Main Activity= ", "onCreate: BookmarQuery: "+ bookmarkQuery);
             setSearchBookmarkQueryListener();
         }
-
         if (bookmarkQuery != null && !bookmarkQuery.isEmpty()){
             searchView.setQuery(bookmarkQuery, true);
             searchView.clearFocus();
@@ -186,9 +185,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                definitionFragment = DefinitionFragment.newInstance(query);
+                String lowercaseQuery = query.toLowerCase();
+
+                definitionFragment = DefinitionFragment.newInstance(lowercaseQuery);
                 bundle = new Bundle();
-                bundle.putString("query", query);
+                bundle.putString("query", lowercaseQuery);
                 definitionFragment.setArguments(bundle);
 
                 //TODO add suggestion in search view
@@ -198,7 +199,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         .replace(R.id.fragment_container, definitionFragment);
                 fragmentTransaction.commit();
 
-                definitionFragment.fetchWordData(query);
+                definitionFragment.fetchWordData(lowercaseQuery);
 
                 searchView.setIconified(true);
                 searchView.clearFocus();
