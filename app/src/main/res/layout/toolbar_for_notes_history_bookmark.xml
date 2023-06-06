@@ -54,7 +54,6 @@
                 android:background="@android:color/transparent"
                 android:contentDescription="@string/delete_all"
                 android:visibility="gone"
-                android:saveEnabled="false"
                 android:layout_weight="0.25"
                 app:layout_constraintStart_toEndOf="@id/action_bar_back"
                 app:layout_constraintTop_toTopOf="@id/toolbar"
