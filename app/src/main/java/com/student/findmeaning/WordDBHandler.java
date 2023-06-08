@@ -9,7 +9,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.student.findmeaning.Models.BookmarkModel;
-import com.student.findmeaning.Models.History;
 import com.student.findmeaning.Models.HistoryModel;
 
 import java.util.ArrayList;

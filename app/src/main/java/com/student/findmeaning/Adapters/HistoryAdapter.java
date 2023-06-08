@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.student.findmeaning.Models.BookmarkModel;
-import com.student.findmeaning.Models.History;
 import com.student.findmeaning.Models.HistoryModel;
 import com.student.findmeaning.R;
 import com.student.findmeaning.ViewHolders.HistoryVH;

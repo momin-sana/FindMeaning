@@ -32,7 +32,6 @@ import com.student.findmeaning.Adapters.MeaningAdapter;
 import com.student.findmeaning.Adapters.PhoneticAdapter;
 import com.student.findmeaning.Models.BookmarkModel;
 import com.student.findmeaning.Models.DictionaryApiResponse;
-import com.student.findmeaning.Models.History;
 import com.student.findmeaning.Models.HistoryModel;
 import com.student.findmeaning.Models.Meaning;
 import com.student.findmeaning.Models.Phonetic;
