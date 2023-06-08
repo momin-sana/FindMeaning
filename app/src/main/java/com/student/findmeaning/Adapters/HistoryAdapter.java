@@ -1,27 +1,33 @@
 package com.student.findmeaning.Adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.student.findmeaning.Models.BookmarkModel;
+import com.student.findmeaning.Models.History;
+import com.student.findmeaning.Models.HistoryModel;
 import com.student.findmeaning.R;
-import com.student.findmeaning.ViewHolders.BookmarkVH;
 import com.student.findmeaning.ViewHolders.HistoryVH;
+import com.student.findmeaning.WordDBHandler;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryVH> {
-    private final List<String> historyListData;
-    private Context context;
+    private ArrayList<HistoryModel> historyListData;
+    private final Context context;
+    private WordDBHandler dbHandler;
 
-    public HistoryAdapter( Context context, List<String> historyListData) {
+    public HistoryAdapter(ArrayList<HistoryModel> historyListData, Context context, WordDBHandler dbHandler) {
         this.historyListData = historyListData;
         this.context = context;
+        this.dbHandler = dbHandler;
     }
 
     @NonNull
@@ -32,8 +38,10 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryVH> {
 
     @Override
     public void onBindViewHolder(@NonNull HistoryVH holder, int position) {
-        String item = historyListData.get(position);
-        holder.historyTVList.setText(item);
+        HistoryModel item = historyListData.get(position);
+        holder.historyTVList.setText(item.getWord().toLowerCase());
+        holder.itemView.setTag(item.getId());
+
         holder.historyCheckBox.setChecked(false);
         holder.historyTVList.setOnClickListener(view -> {
 //                When user clicks on text it should open definition fragment with its meaning.
@@ -44,6 +52,18 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryVH> {
 
     @Override
     public int getItemCount() {
-        return historyListData.size();
+        if (historyListData == null) {
+            return 0;
+        } else {
+            return historyListData.size();
+        }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public void setDataChangedHistory(ArrayList<HistoryModel> historyListData){
+        dbHandler = new WordDBHandler(context);
+        dbHandler.getAllHistory();
+        this.historyListData = historyListData;
+        notifyDataSetChanged();
     }
 }

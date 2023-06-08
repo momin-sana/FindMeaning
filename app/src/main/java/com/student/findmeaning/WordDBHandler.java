@@ -7,10 +7,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.student.findmeaning.Models.BookmarkModel;
 import com.student.findmeaning.Models.History;
+import com.student.findmeaning.Models.HistoryModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,13 +52,13 @@ public class WordDBHandler extends SQLiteOpenHelper {
         if (word == null) {
             return;
         }
-        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_WORD + "=?", new String[]{word});
-        if (cursor.getCount() > 0) {
-            cursor.close();
-            db.close();
-            return; // The same word already exists in the table, do nothing
-        }
-        cursor.close();
+//        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_WORD + "=?", new String[]{word});
+//        if (cursor.getCount() > 0) {
+//            cursor.close();
+//            db.close();
+//            return; // The same word already exists in the table, do nothing
+//        }
+//        cursor.close();
 
         // The same word does not exist in the table, insert the new row
         ContentValues values = new ContentValues();
@@ -73,24 +73,27 @@ public class WordDBHandler extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void addHistory(History history) {
+    public void addHistory(HistoryModel history) {
         SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-
-        // Check the number of rows in the table
-        Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM " + TABLE_NAME, null);
-        cursor.moveToFirst();
-        int rowCount = cursor.getInt(0);
+        String word = history.getWord();
+        if (word == null) {
+            return;
+        }
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_WORD + "=? AND " + COLUMN_IS_BOOKMARK + " = 0", new String[]{word});
+        if (cursor.getCount() > 0) {
+            cursor.close();
+            db.close();
+            return;
+        }
         cursor.close();
 
-        // If the number of rows exceeds 100, delete the oldest row
-        if (rowCount >= 100) {
-            db.delete(TABLE_NAME, COLUMN_ID + " = (SELECT MIN(" + COLUMN_ID + ") FROM " + TABLE_NAME + ")", null);
-        }
-
-        // Insert the new row into the table
+        ContentValues values = new ContentValues();
         values.put(COLUMN_WORD, history.getWord());
-        values.put(COLUMN_IS_BOOKMARK, 0); // 1 = false which is for a history entry
+        if (history.getId() != -1) {
+            values.put(COLUMN_ID, history.getId());
+        }
+        values.put(COLUMN_IS_BOOKMARK, 0);
+
         db.insert(TABLE_NAME, null, values);
         db.close();
     }
@@ -112,16 +115,16 @@ public class WordDBHandler extends SQLiteOpenHelper {
         return bookmarks;
     }
 
-    public List<History> getAllHistory(){
-        List<History> historyList = new ArrayList<>();
+    public List<HistoryModel> getAllHistory(){
+        List<HistoryModel> historyList = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
 
-        Cursor cursorHistory = db.rawQuery(" SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_IS_BOOKMARK + " = 0 ", null);
+        Cursor cursorHistory = db.rawQuery(" SELECT DISTINCT * FROM " + TABLE_NAME + " WHERE " + COLUMN_IS_BOOKMARK + " = 0 ", null);
         if(cursorHistory.moveToFirst()){
             do{
                 @SuppressLint("Range") int id = cursorHistory.getInt(cursorHistory.getColumnIndex(COLUMN_ID));
                 @SuppressLint("Range") String word = cursorHistory.getString(cursorHistory.getColumnIndex(COLUMN_WORD));
-                historyList.add(new History(id, word));
+                historyList.add(new HistoryModel(id, word));
             }while(cursorHistory.moveToNext());
         }
         cursorHistory.close();
@@ -136,18 +139,29 @@ public class WordDBHandler extends SQLiteOpenHelper {
         db.close();
     }
 
+    //DELETE SELECTED WORDS WITH RESPECT TO IDS
     public void deleteWord(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_NAME, COLUMN_ID + " = ?", new String[]{String.valueOf(id)});
         db.close();
     }
 
+//    DELETE ALL BOOKMARK
     public void deleteBookmark(){
         SQLiteDatabase db = getWritableDatabase();
         String whereClause = COLUMN_IS_BOOKMARK + " =? ";
         String[] whereArg = {"1"};
         int bookmarkDeleted = db.delete(TABLE_NAME,whereClause,whereArg);
         Log.d("TAG", "deleteBookmark: " + bookmarkDeleted);
+    }
+
+    //    DELETE ALL HISTORY
+    public void deleteHistory(){
+        SQLiteDatabase db = getWritableDatabase();
+        String whereClause = COLUMN_IS_BOOKMARK + " =? ";
+        String[] whereArg = {"0"};
+        int historyDeleted = db.delete(TABLE_NAME,whereClause,whereArg);
+        Log.d("TAG", "deleteHistory: " + historyDeleted);
     }
 
     public boolean isWordBookmarked(String word) {
@@ -177,7 +191,6 @@ public class WordDBHandler extends SQLiteOpenHelper {
         String selection = COLUMN_WORD + " = ?";
         String[] selectionArgs = {word};
         Cursor cursor = db.query(TABLE_NAME, columns, selection, selectionArgs, null, null, null);
-
 
         int wordId = -1;
         if (cursor.moveToFirst()) {

@@ -3,12 +3,10 @@ package com.student.findmeaning.Adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
-import android.widget.TextView;
+import android.widget.ImageButton;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.student.findmeaning.Models.BookmarkModel;
@@ -33,7 +31,6 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkVH> {
         this.context = context;
         this.dbHandler = dbHandler;
     }
-
     public void setOnItemClickListener(OnBookmarkItemClickListener listener) {
         this.clickListener = listener;
     }
@@ -57,9 +54,7 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkVH> {
     @Override
     public void onBindViewHolder(@NonNull BookmarkVH holder, int position) {
         BookmarkModel clickedItem = bookmarkListData.get(position);
-        String clickedWord = clickedItem.getWord();
-        String text = clickedWord.toLowerCase();
-        holder.bookmarkTVList.setText(text);
+        holder.bookmarkTVList.setText(clickedItem.getWord().toLowerCase());
         holder.itemView.setTag(clickedItem.getId());
 
         //         navigation from list word to definition Fragment -- 2
@@ -80,9 +75,6 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkVH> {
             }else{
                 selectedPositions.remove(Integer.valueOf(position));
                 selectList.remove(clickedItem);
-            }
-            if (selectedPositions.size() > 0){
-
             }
         });
 

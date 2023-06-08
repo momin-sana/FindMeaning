@@ -35,7 +35,7 @@
             android:background="@android:color/transparent"
             android:fontFamily="serif"
             android:paddingStart="10dp"
-            android:padding="5dp"
+            android:padding="10dp"
             android:text=""
             android:visibility="invisible"
             android:textAllCaps="false"

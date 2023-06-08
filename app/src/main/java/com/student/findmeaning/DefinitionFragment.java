@@ -32,6 +32,8 @@ import com.student.findmeaning.Adapters.MeaningAdapter;
 import com.student.findmeaning.Adapters.PhoneticAdapter;
 import com.student.findmeaning.Models.BookmarkModel;
 import com.student.findmeaning.Models.DictionaryApiResponse;
+import com.student.findmeaning.Models.History;
+import com.student.findmeaning.Models.HistoryModel;
 import com.student.findmeaning.Models.Meaning;
 import com.student.findmeaning.Models.Phonetic;
 import java.util.ArrayList;
@@ -55,6 +57,7 @@ public class DefinitionFragment extends Fragment {
     private ImageButton phoneticBookmarkIcon;
     private BookmarkModel bookmarkModel;
     private WordDBHandler dbHandler;
+    private HistoryModel historyModel;
 
 
     public DefinitionFragment() {
@@ -66,6 +69,7 @@ public class DefinitionFragment extends Fragment {
         Bundle arguments = new Bundle();
         arguments.putString("query", queryOrBookmarkedrHistory);
         arguments.putString("bookmarkQuery",queryOrBookmarkedrHistory);
+        // TODO put argument of historyQuery
         definitionFragment.setArguments(arguments);
         return definitionFragment;
     }
@@ -133,6 +137,7 @@ public class DefinitionFragment extends Fragment {
         word_text = view.findViewById(R.id.word_text);
         word_text.setVisibility(View.INVISIBLE);
 
+//        getting query from  bookmark, searchview, and history
         Bundle bundle = getArguments();
         if (bundle != null) {
             if(bundle.containsKey("bookmarkQuery")){
@@ -143,6 +148,7 @@ public class DefinitionFragment extends Fragment {
                 String word = bundle.getString("query");
                 word_text.setText(word);
             }
+//            TODO get history query
         }
 
         // add  back button press.
@@ -229,6 +235,10 @@ public class DefinitionFragment extends Fragment {
                     List<DictionaryApiResponse> dictionaryApiResponseList = response.body();
                     onFetchDataListener.onFetchData(dictionaryApiResponseList.get(0), word);
 
+                    historyModel = new HistoryModel(word);
+                    dbHandler.addHistory(historyModel);
+                    Log.d("TAG", "History onResponse: "+ word);
+
                     //handle color of icon
                     phoneticBookmarkIcon.setOnClickListener(view1 -> {
                         boolean isBookmarked = dbHandler.isWordBookmarked(word);
@@ -252,9 +262,7 @@ public class DefinitionFragment extends Fragment {
                     if (isBookmarked) {
                         phoneticBookmarkIcon.setColorFilter(ResourcesCompat.getColor(getResources(), R.color.text_icon, null));
                     }else{phoneticBookmarkIcon.setColorFilter(null);}
-
-                    // TODO add query word to history db
-                }else {
+                 }else {
                     AlertDialog alertDialog = new AlertDialog.Builder(requireContext())
                             .setTitle("Unable to fetch data from API")
                                     .setMessage("Type some other word.")

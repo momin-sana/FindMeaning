@@ -12,12 +12,10 @@ import com.student.findmeaning.R;
 public class BookmarkVH extends RecyclerView.ViewHolder {
         public TextView bookmarkTVList;
         public CheckBox bookmarkCheckBox;
-        public ImageButton deleteBtn;
 
     public BookmarkVH(@NonNull View itemView) {
         super(itemView);
             bookmarkCheckBox = itemView.findViewById(R.id.bookmarkCheckBox);
             bookmarkTVList = itemView.findViewById(R.id.bookmarkList_item_textView);
-            deleteBtn = itemView.findViewById(R.id.action_bar_delete_bookmark);
     }
 }

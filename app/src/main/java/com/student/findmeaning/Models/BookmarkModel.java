@@ -7,6 +7,7 @@ public class BookmarkModel {
     public BookmarkModel(String word) {
         this(-1, word);
     }
+
         public BookmarkModel(int id, String word) {
             this.id = id;
             this.word = word;

@@ -7,9 +7,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+
 import android.view.View;
-import android.widget.CheckBox;
+
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,7 +27,7 @@ public class Bookmark extends AppCompatActivity implements OnBookmarkItemClickLi
     private WordDBHandler dbHandler;
     RecyclerView recyclerView;
 
-    public Bookmark(){ }
+//    public Bookmark(){ }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +69,7 @@ public class Bookmark extends AppCompatActivity implements OnBookmarkItemClickLi
         if (bookmarkModelArrayList.isEmpty()){
             deleteAllBookmark.setVisibility(View.INVISIBLE);
             deleteBookmark.setVisibility(View.INVISIBLE);
+            Toast.makeText(this, R.string.empty_bookmark, Toast.LENGTH_LONG).show();
         }else{
             deleteAllBookmark.setVisibility(View.VISIBLE);
             deleteAllBookmark.setOnClickListener(view -> {
@@ -90,7 +91,6 @@ public class Bookmark extends AppCompatActivity implements OnBookmarkItemClickLi
             });
 
             deleteBookmark.setVisibility(View.VISIBLE);
-//            deleteBookmark.setColorFilter(R.color.text_icon);
             deleteBookmark.setOnClickListener(view -> {
                 ArrayList<Integer> selectedPositions = bookmarkAdapter.getSelectedPositions();
                 ArrayList<Integer> copyPositions = new ArrayList<>(selectedPositions); // Create a copy of the selectedPositions list
