@@ -103,11 +103,12 @@ public class Bookmark extends AppCompatActivity implements OnBookmarkItemClickLi
     }
 
 
-//    calling onItemClick from bookmarkAdapter to navigative to mainActivity and pass value     //navigation from list word to definition Fragment -- 3
+//    calling onItemClick from bookmarkAdapter to navigative to mainActivity and pass value
+// navigation from list word to definition Fragment -- 3
     @Override
-    public void onItemClick(String wordFromBookmark) {
+    public void onItemClick(String wordFromBookmarkOrHistory) {
         Intent intent = new Intent(Bookmark.this, MainActivity.class);
-        intent.putExtra("bookmarkQuery", wordFromBookmark);
+        intent.putExtra("bookmarkQuery", wordFromBookmarkOrHistory);
         startActivity(intent);
     }
 

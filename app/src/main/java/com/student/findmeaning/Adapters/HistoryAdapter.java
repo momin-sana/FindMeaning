@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.student.findmeaning.Models.BookmarkModel;
 import com.student.findmeaning.Models.HistoryModel;
+import com.student.findmeaning.OnBookmarkItemClickListener;
 import com.student.findmeaning.R;
 import com.student.findmeaning.ViewHolders.HistoryVH;
 import com.student.findmeaning.WordDBHandler;
@@ -22,12 +24,31 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryVH> {
     private ArrayList<HistoryModel> historyListData;
     private final Context context;
     private WordDBHandler dbHandler;
+    public OnBookmarkItemClickListener clickListener;
+    private ArrayList<Integer> selectedPositions = new ArrayList<>();
+    private final ArrayList<HistoryModel> selectList=new ArrayList<>();
+
 
     public HistoryAdapter(ArrayList<HistoryModel> historyListData, Context context, WordDBHandler dbHandler) {
         this.historyListData = historyListData;
         this.context = context;
         this.dbHandler = dbHandler;
     }
+
+    public void setOnItemClickListener(OnBookmarkItemClickListener listener) {
+        this.clickListener = listener;
+    }
+
+    public ArrayList<Integer> getSelectedPositions() {
+        return selectedPositions;
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public void setSelectedPositions(ArrayList<Integer> selectedPositions) {
+        this.selectedPositions = selectedPositions;
+        notifyDataSetChanged();
+    }
+
 
     @NonNull
     @Override
@@ -41,11 +62,22 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryVH> {
         holder.historyTVList.setText(item.getWord().toLowerCase());
         holder.itemView.setTag(item.getId());
 
-        holder.historyCheckBox.setChecked(false);
         holder.historyTVList.setOnClickListener(view -> {
-//                When user clicks on text it should open definition fragment with its meaning.
-//                jo kaam searchview k click krne pe hoga wahi kaam yeha text k click krne pe hoga
-            Toast.makeText(context, "clicked on: "+ item, Toast.LENGTH_SHORT).show();
+            String word = item.getWord();
+            if (clickListener != null){
+                clickListener.onItemClick(word);
+            }
+        });
+
+        holder.historyCheckBox.setChecked(selectedPositions.contains(position));
+        holder.historyCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked){
+                selectedPositions.add(position);
+                selectList.add(item);
+            }else{
+                selectedPositions.remove(Integer.valueOf(position));
+                selectList.remove(item);
+            }
         });
     }
 
@@ -64,5 +96,21 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryVH> {
         dbHandler.getAllHistory();
         this.historyListData = historyListData;
         notifyDataSetChanged();
+    }
+
+
+    @SuppressLint("NotifyDataSetChanged")
+    public void deleteWords(int position) {
+        ArrayList<Integer> ids = new ArrayList<>();
+        for (HistoryModel historyModel : selectList){
+            ids.add(historyModel.getId());
+        }
+        for (Integer id : ids){
+            dbHandler.deleteWord(id);
+        }
+        historyListData.removeAll(selectList);
+        notifyDataSetChanged();
+        selectList.clear();
+        selectedPositions.clear();
     }
 }

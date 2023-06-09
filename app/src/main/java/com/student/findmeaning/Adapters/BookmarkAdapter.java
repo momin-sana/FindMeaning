@@ -31,6 +31,8 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkVH> {
         this.context = context;
         this.dbHandler = dbHandler;
     }
+
+//    for navigation from list word to definition Fragment -- 2
     public void setOnItemClickListener(OnBookmarkItemClickListener listener) {
         this.clickListener = listener;
     }
@@ -66,7 +68,6 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkVH> {
             }
         });
 
-
         holder.bookmarkCheckBox.setChecked(selectedPositions.contains(position));
         holder.bookmarkCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked){
@@ -79,8 +80,6 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkVH> {
         });
 
     }
-
-
 
     @Override
     public int getItemCount() {

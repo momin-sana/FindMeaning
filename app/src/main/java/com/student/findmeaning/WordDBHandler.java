@@ -74,11 +74,12 @@ public class WordDBHandler extends SQLiteOpenHelper {
 
     public void addHistory(HistoryModel history) {
         SQLiteDatabase db = this.getWritableDatabase();
+
         String word = history.getWord();
-        if (word == null) {
-            return;
-        }
-        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_WORD + "=? AND " + COLUMN_IS_BOOKMARK + " = 0", new String[]{word});
+        if (word == null) {return;}
+
+        // Query to check for duplicate word, case-insensitive
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_WORD + "=? COLLATE NOCASE AND " + COLUMN_IS_BOOKMARK + " = 0", new String[]{word});
         if (cursor.getCount() > 0) {
             cursor.close();
             db.close();

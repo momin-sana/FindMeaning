@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class History extends AppCompatActivity {
+public class History extends AppCompatActivity implements OnBookmarkItemClickListener{
     TextView textView_pgName;
     ImageButton backImageBtn, deleteImageBtn, actionBarDeleteAll;
     private ArrayList<HistoryModel> historyArrayList = new ArrayList<>();
@@ -42,7 +42,7 @@ public class History extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.history_recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         final HistoryAdapter historyAdapter = new HistoryAdapter(historyArrayList, getApplicationContext(), dbHandler);
-//      setOnItemClickListener - to navigate from list to definition fragment
+        historyAdapter.setOnItemClickListener(this);
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(historyAdapter);
@@ -52,7 +52,6 @@ public class History extends AppCompatActivity {
         historyArrayList = (ArrayList<HistoryModel>) dbHandler.getAllHistory();
         Collections.reverse(historyArrayList);
         historyAdapter.setDataChangedHistory(historyArrayList);
-        Log.d("TAG", "HIstory onCreate: "+ historyArrayList);
 
         deleteImageBtn = findViewById(R.id.action_bar_delete_history);
         deleteImageBtn.setOnClickListener(view -> Toast.makeText(this, "Delete btn clicked", Toast.LENGTH_SHORT).show());
@@ -85,19 +84,21 @@ public class History extends AppCompatActivity {
             });
 
             deleteImageBtn.setVisibility(View.VISIBLE);
-//            deleteImageBtn.setOnClickListener(view -> {
-//                ArrayList<Integer> selectedPositions = historyArrayList.getSelectedPositions();
-//                ArrayList<Integer> copyPositions = new ArrayList<>(selectedPositions); // Create a copy of the selectedPositions list
-//                for (int position : copyPositions){
-//                    historyAdapter.deleteWords(position);
-//                }
-//                historyAdapter.setSelectedPositions(new ArrayList<>());
-//            });
+            deleteImageBtn.setOnClickListener(view -> {
+                ArrayList<Integer> selectedPositions = historyAdapter.getSelectedPositions();
+                ArrayList<Integer> copyPositions = new ArrayList<>(selectedPositions); // Create a copy of the selectedPositions list
+                for (int position : copyPositions){
+                    historyAdapter.deleteWords(position);
+                }
+                historyAdapter.setSelectedPositions(new ArrayList<>());
+            });
         }
+    }
 
-            // TODO     holder.historyTVList.setOnClickListener(view -> {
-        //  When user clicks on text it should open definition fragment with its meaning.
-//                jo kaam searchview k click krne pe hoga wahi kaam yeha text k click krne pe hoga
-
+    @Override
+    public void onItemClick(String wordFromBookmarkOrHistory) {
+        Intent intent = new Intent(History.this, MainActivity.class);
+        intent.putExtra("historyQuery", wordFromBookmarkOrHistory);
+        startActivity(intent);
     }
 }

@@ -34,15 +34,14 @@ import com.student.findmeaning.Models.Phonetic;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnFetchDataListener {
-    private Toolbar toolbar;
     private DrawerLayout drawerLayout;
-    private ImageButton btnNavMenu, phoneticBookmarkIcon;
-    private NavigationView navigationView;
+    private ImageButton btnNavMenu;
     private SearchView searchView;
     private TextView appnameTV;
     public Bundle bundle;
     private DefinitionFragment definitionFragment;
     String bookmarkQuery;
+    String historyQuery;
 
 
     @Override
@@ -50,16 +49,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        navigationView = findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         btnNavMenu = findViewById(R.id.navigation_button);
 
-        toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         drawerLayout = findViewById(R.id.drawer_layout);
         appnameTV = findViewById(R.id.appNameTV);
         searchView = findViewById(R.id.search_view);
-
-        phoneticBookmarkIcon = findViewById(R.id.phonetic_bookmark_icon);
 
         navigationView.setNavigationItemSelectedListener(this);
         btnNavMenu.setOnClickListener(view -> {
@@ -75,7 +72,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 .commit();
 
 
-        // Retrieve the bookmarkQuery from the intent    //navigation from list word to definition Fragment -- 4
+        // Retrieve the bookmarkQuery from the intent
+        // navigation from list word to definition Fragment -- 4
         Bundle extras = getIntent().getExtras();
         if (extras != null && extras.containsKey("bookmarkQuery")) {
             searchView.setIconified(true);
@@ -88,9 +86,58 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             searchView.setQuery(bookmarkQuery, true);
             searchView.clearFocus();
             setSreachFromBookmark();
-        }else{
+        }
+        if (extras != null && extras.containsKey("historyQuery")){
+            searchView.setIconified(true);
+            appnameTV.setVisibility(View.VISIBLE);
+            historyQuery = extras.getString("historyQuery");
+            Log.d("Main Activity= ", "onCreate: historyQuery: "+ historyQuery);
+            setSearchHistoryQueryListener();
+        }
+        if (historyQuery != null && !historyQuery.isEmpty()){
+            searchView.setQuery(historyQuery, true);
+//            searchView.clearFocus();
+            setSearchFromHistory();
+        }
+        else{
             setSearchViewListener();
         }
+    }
+
+    private void setSearchFromHistory() {
+        searchView.setOnQueryTextFocusChangeListener((view, hasFocus) -> {
+            if (hasFocus || searchView.getQuery().length() > 0) {
+                if (searchView.getVisibility() == View.VISIBLE) {
+                    setSearchHistoryQueryListener();
+                    appnameTV.setVisibility(View.INVISIBLE);
+                }
+            } else {
+                appnameTV.setVisibility(View.VISIBLE);
+                searchView.setIconified(true);
+            }
+        });
+    }
+
+    private void setSearchHistoryQueryListener() {
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String historyQuery) {
+                definitionFragment = DefinitionFragment.newInstance(historyQuery);
+                bundle= new Bundle();
+                bundle.putString("historyQuery", historyQuery);
+                definitionFragment.setArguments(bundle);
+                fragmentTransaction();
+                definitionFragment.fetchWordData(historyQuery);
+                searchView.setIconified(true);
+                searchView.clearFocus();
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
     }
 
     private void setSreachFromBookmark() {
@@ -115,11 +162,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 bundle = new Bundle();
                 bundle.putString("bookmarkQuery", bookmarkQuery);
                 definitionFragment.setArguments(bundle);
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragment_container, definitionFragment);
-                fragmentTransaction.commit();
-
+                fragmentTransaction();
                 definitionFragment.fetchWordData(bookmarkQuery);
 
                 searchView.setIconified(true);
@@ -194,10 +237,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 //TODO add suggestion in search view
 
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragment_container, definitionFragment);
-                fragmentTransaction.commit();
+                fragmentTransaction();
 
                 definitionFragment.fetchWordData(lowercaseQuery);
 
@@ -242,6 +282,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }else{super.onBackPressed();}
     }
 
-
-
+    public void fragmentTransaction(){
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, definitionFragment);
+        fragmentTransaction.commit();
+    }
 }
