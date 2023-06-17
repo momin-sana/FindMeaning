@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_view"
+    app:cardBackgroundColor="@color/light_blue_background"
+    app:cardCornerRadius="10dp"
+    android:outlineSpotShadowColor="@color/light_blue_background"
+    android:outlineAmbientShadowColor="@color/light_blue_background"
+    app:cardElevation="@dimen/cardview_default_elevation"
+    app:cardUseCompatPadding="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:padding="10dp"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="2">
+
+        <TextView
+            android:id="@+id/notes_word_textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:textColor="@color/button_default"
+            android:padding="5dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:inputType="text"
+            android:fontFamily="serif"
+            android:clickable="true"
+            android:focusable="true"
+            android:text=""
+            tools:ignore="RtlSymmetry,TextViewEdits" />
+
+            <TextView
+                android:id="@+id/notes_description_textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="serif"
+                android:padding="5dp"
+                android:text=""
+                android:maxLines="1"
+                android:lines="1"
+                android:textAllCaps="false"
+                android:textColor="@color/button_default"
+                android:textSize="15sp"
+                android:textStyle="italic"
+                tools:ignore="RtlSymmetry" />
+
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/notes_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_edit"
+            android:layout_gravity="center_vertical"
+            android:backgroundTint="@android:color/transparent"
+            android:contentDescription="@string/edit_notes" />
+
+        <CheckBox
+            android:id="@+id/notes_checkBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:buttonTint="@drawable/checkbox_state" />
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

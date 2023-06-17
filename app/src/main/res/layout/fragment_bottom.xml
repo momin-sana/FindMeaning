@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context=".BottomFragment">
+
+<LinearLayout
+    android:id="@+id/layout_bottomDialog"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:background="#510F2188"
+    android:orientation="vertical"
+    android:padding="7dp"
+    tools:ignore="Orientation"
+    android:layout_gravity="bottom">
+
+    <TextView
+        android:id="@+id/textView_bottomDialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:textAlignment="center"
+        android:textColor="@color/button_default"
+        android:textSize="20sp"
+        android:text=""/>
+
+    <EditText
+        android:id="@+id/editText_word_bottomDialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/button_default"
+        android:hint="@string/word"
+        android:padding="12dp"
+        android:maxLines="1"
+        android:lines="1"
+        android:inputType="text"
+        android:textColor="@color/text_icon"
+        android:textColorHint="@color/button_pressed"
+        android:textSize="15sp"
+        android:autofillHints="no" />
+
+    <EditText
+        android:id="@+id/editText_description_bottomDialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/button_default"
+        android:hint="@string/description_for_note"
+        android:padding="12dp"
+        android:layout_marginTop="2dp"
+        android:textColor="@color/text_icon"
+        android:textColorHint="@color/button_pressed"
+        android:textSize="15sp"
+        android:minLines="1"
+        android:maxLines="20"
+        android:autofillHints="no"
+        android:inputType="textMultiLine" />
+
+    <Button
+        android:id="@+id/enterButton_bottomDialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
+        android:background="@color/button_default"
+        android:layout_gravity="end"
+        android:text="@string/enter"
+        android:clickable="true"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:textSize="16sp" />
+
+</LinearLayout>
+</FrameLayout>

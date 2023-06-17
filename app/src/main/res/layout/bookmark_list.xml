@@ -7,6 +7,8 @@
     android:id="@+id/card_view"
     app:cardBackgroundColor="@color/light_blue_background"
     app:cardCornerRadius="10dp"
+    android:outlineSpotShadowColor="@color/light_blue_background"
+    android:outlineAmbientShadowColor="@color/light_blue_background"
     app:cardElevation="@dimen/cardview_default_elevation"
     app:cardUseCompatPadding="true">
 
@@ -14,7 +16,7 @@
         android:id="@+id/regularLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/light_blue_background"
+        android:background="@android:color/transparent"
         android:padding="10dp">
 
         <TextView

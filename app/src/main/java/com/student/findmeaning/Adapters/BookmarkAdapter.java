@@ -40,7 +40,7 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkVH> {
     public ArrayList<Integer> getSelectedPositions() {
         return selectedPositions;
     }
-
+//set a new list of selected positions and notify the adapter of the data set change
     @SuppressLint("NotifyDataSetChanged")
     public void setSelectedPositions(ArrayList<Integer> selectedPositions) {
         this.selectedPositions = selectedPositions;

@@ -92,11 +92,14 @@ public class Bookmark extends AppCompatActivity implements OnBookmarkItemClickLi
 
             deleteBookmark.setVisibility(View.VISIBLE);
             deleteBookmark.setOnClickListener(view -> {
+                //    to create a copy of the selected positions list to avoid concurrent modification while deleting the items.
                 ArrayList<Integer> selectedPositions = bookmarkAdapter.getSelectedPositions();
                 ArrayList<Integer> copyPositions = new ArrayList<>(selectedPositions); // Create a copy of the selectedPositions list
+// here it iterates over the copied positions and calls the deleteWords() method in the bookmarkAdapter to delete the corresponding words.
                 for (int position : copyPositions){
                     bookmarkAdapter.deleteWords(position);
                 }
+//Finally, it clears the selected positions and sets an empty list using setSelectedPositions() to update the adapter.
                 bookmarkAdapter.setSelectedPositions(new ArrayList<>());
             });
         }
