@@ -72,6 +72,7 @@ public class History extends AppCompatActivity implements OnBookmarkItemClickLis
                     int itemId = item.getItemId();
                     if (itemId == R.id.menu_delete_all){
                         dbHandler.deleteHistory();
+                        historyArrayList.clear();
                         historyAdapter.setDataChangedHistory(historyArrayList);
                         Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                         startActivity(intent);

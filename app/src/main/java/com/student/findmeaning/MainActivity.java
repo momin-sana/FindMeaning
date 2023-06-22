@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DefinitionFragment definitionFragment;
     String bookmarkQuery;
     String historyQuery;
+    String notesQuery;
 
 
     @Override
@@ -99,9 +100,62 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //            searchView.clearFocus();
             setSearchFromHistory();
         }
+        if (extras != null && extras.containsKey("notesQuery")){
+            searchView.setIconified(true);
+            appnameTV.setVisibility(View.VISIBLE);
+            notesQuery = extras.getString("notesQuery");
+            Log.d("Main Activity= ", "onCreate: notesQuery: "+ notesQuery);
+            setSearchNotesQueryListener();
+        }
+        if (notesQuery != null && !notesQuery.isEmpty()){
+            searchView.setQuery(notesQuery, true);
+//            searchView.clearFocus();
+            setSearchFromNotes();
+        }
         else{
             setSearchViewListener();
         }
+    }
+
+    private void setSearchViewListener(){
+        searchView.setOnQueryTextFocusChangeListener((view, b) -> {
+            if (view.hasFocus() || searchView.getQuery().length() > 0) {
+                if (searchView.getVisibility() == View.VISIBLE) {
+                    setSearchQueryListener();
+                    appnameTV.setVisibility(View.INVISIBLE);
+                }
+            } else {
+                appnameTV.setVisibility(View.VISIBLE);
+                searchView.setIconified(true);
+            }
+        });
+    }
+
+    private void setSearchQueryListener(){
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                String lowercaseQuery = query.toLowerCase();
+
+                definitionFragment = DefinitionFragment.newInstance(lowercaseQuery);
+                bundle = new Bundle();
+                bundle.putString("query", lowercaseQuery);
+                definitionFragment.setArguments(bundle);
+
+                fragmentTransaction();
+
+                definitionFragment.fetchWordData(lowercaseQuery);
+
+                searchView.setIconified(true);
+                searchView.clearFocus();
+                return true;
+            }
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+        searchView.setBackgroundResource(R.drawable.button_background);
     }
 
     private void setSearchFromHistory() {
@@ -178,6 +232,42 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         searchView.setBackgroundResource(R.drawable.button_background);
     }
 
+    private void setSearchFromNotes() {
+        searchView.setOnQueryTextFocusChangeListener((view, hasFocus) -> {
+            if (hasFocus || searchView.getQuery().length() > 0) {
+                if (searchView.getVisibility() == View.VISIBLE) {
+                    setSearchHistoryQueryListener();
+                    appnameTV.setVisibility(View.INVISIBLE);
+                }
+            } else {
+                appnameTV.setVisibility(View.VISIBLE);
+                searchView.setIconified(true);
+            }
+        });
+    }
+
+    private void setSearchNotesQueryListener() {
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String notesQuery) {
+                definitionFragment = DefinitionFragment.newInstance(notesQuery);
+                bundle= new Bundle();
+                bundle.putString("notesQuery", notesQuery);
+                definitionFragment.setArguments(bundle);
+                fragmentTransaction();
+                definitionFragment.fetchWordData(notesQuery);
+                searchView.setIconified(true);
+                searchView.clearFocus();
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+    }
+
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -210,48 +300,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    private void setSearchViewListener(){
-        searchView.setOnQueryTextFocusChangeListener((view, b) -> {
-            if (view.hasFocus() || searchView.getQuery().length() > 0) {
-                if (searchView.getVisibility() == View.VISIBLE) {
-                    setSearchQueryListener();
-                    appnameTV.setVisibility(View.INVISIBLE);
-                }
-            } else {
-                appnameTV.setVisibility(View.VISIBLE);
-                searchView.setIconified(true);
-            }
-        });
-    }
 
-    private void setSearchQueryListener(){
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                String lowercaseQuery = query.toLowerCase();
-
-                definitionFragment = DefinitionFragment.newInstance(lowercaseQuery);
-                bundle = new Bundle();
-                bundle.putString("query", lowercaseQuery);
-                definitionFragment.setArguments(bundle);
-
-                //TODO add suggestion in search view
-
-                fragmentTransaction();
-
-                definitionFragment.fetchWordData(lowercaseQuery);
-
-                searchView.setIconified(true);
-                searchView.clearFocus();
-                return true;
-            }
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
-        searchView.setBackgroundResource(R.drawable.button_background);
-    }
 
     @Override
     public void onFetchData(DictionaryApiResponse apiResponse, String message) {

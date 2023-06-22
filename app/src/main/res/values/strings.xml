@@ -45,11 +45,18 @@
     <string name="empty_bookmark">Bookmark is Empty! \n Add bookmarks to display</string>
     <string name="empty_history">History is empty</string>
     <string name="history_cleared">\"All History is Cleared ! \"</string>
+
     <string name="add_note">Add Note</string>
     <string name="edit_notes">Edit Notes</string>
     <string name="description_for_note">Description for note</string>
     <string name="word">Word</string>
     <string name="enter">Enter</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="edit_dialog">Edit Notes</string>
+    <string name="add_new_note">Add New Note</string>
+    <string name="enter_word">Enter a word</string>
+    <string name="enter_description">Enter description</string>
+    <string name="note_not_inserted">Note Not Inserted</string>
+    <string name="notes_cleared">\"All Notes is Cleared ! \"</string>
+    <string name="notes_empty">Notes is Empty! \n Add note to display</string>
 
 </resources>

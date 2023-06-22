@@ -28,6 +28,7 @@
         <entry key="..\:/Users/Sana-Mohsin/AndroidStudioProjects/FindMeaning/app/src/main/res/drawable/ic_bookmark_white_star.xml" value="0.2555" />
         <entry key="..\:/Users/Sana-Mohsin/AndroidStudioProjects/FindMeaning/app/src/main/res/drawable/ic_ddd.xml" value="0.1025" />
         <entry key="..\:/Users/Sana-Mohsin/AndroidStudioProjects/FindMeaning/app/src/main/res/drawable/ic_delete_all.xml" value="0.1" />
+        <entry key="..\:/Users/Sana-Mohsin/AndroidStudioProjects/FindMeaning/app/src/main/res/drawable/ic_edit.xml" value="0.1" />
         <entry key="..\:/Users/Sana-Mohsin/AndroidStudioProjects/FindMeaning/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
         <entry key="..\:/Users/Sana-Mohsin/AndroidStudioProjects/FindMeaning/app/src/main/res/drawable/ic_menu_slideshow.xml" value="0.2245" />
         <entry key="..\:/Users/Sana-Mohsin/AndroidStudioProjects/FindMeaning/app/src/main/res/drawable/ic_note_add.xml" value="0.1025" />
@@ -52,7 +53,7 @@
         <entry key="..\:/Users/Sana-Mohsin/AndroidStudioProjects/FindMeaning/app/src/main/res/layout/custom_alert_dialog.xml" value="0.14221014492753623" />
         <entry key="..\:/Users/Sana-Mohsin/AndroidStudioProjects/FindMeaning/app/src/main/res/layout/definition_list_items.xml" value="0.25462962962962965" />
         <entry key="..\:/Users/Sana-Mohsin/AndroidStudioProjects/FindMeaning/app/src/main/res/layout/fragment_blank.xml" value="0.2164855072463768" />
-        <entry key="..\:/Users/Sana-Mohsin/AndroidStudioProjects/FindMeaning/app/src/main/res/layout/fragment_bottom.xml" value="0.11955420466058764" />
+        <entry key="..\:/Users/Sana-Mohsin/AndroidStudioProjects/FindMeaning/app/src/main/res/layout/fragment_bottom.xml" value="0.264" />
         <entry key="..\:/Users/Sana-Mohsin/AndroidStudioProjects/FindMeaning/app/src/main/res/layout/fragment_bottom_add_notes.xml" value="0.11955420466058764" />
         <entry key="..\:/Users/Sana-Mohsin/AndroidStudioProjects/FindMeaning/app/src/main/res/layout/fragment_definition.xml" value="0.176" />
         <entry key="..\:/Users/Sana-Mohsin/AndroidStudioProjects/FindMeaning/app/src/main/res/layout/fragment_gallery.xml" value="0.25416666666666665" />
@@ -63,7 +64,7 @@
         <entry key="..\:/Users/Sana-Mohsin/AndroidStudioProjects/FindMeaning/app/src/main/res/layout/history_list.xml" value="0.12708333333333333" />
         <entry key="..\:/Users/Sana-Mohsin/AndroidStudioProjects/FindMeaning/app/src/main/res/layout/meaning_list_items.xml" value="0.1" />
         <entry key="..\:/Users/Sana-Mohsin/AndroidStudioProjects/FindMeaning/app/src/main/res/layout/nav_header_main.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/Sana-Mohsin/AndroidStudioProjects/FindMeaning/app/src/main/res/layout/notes_list.xml" value="0.12158054711246201" />
+        <entry key="..\:/Users/Sana-Mohsin/AndroidStudioProjects/FindMeaning/app/src/main/res/layout/notes_list.xml" value="0.264" />
         <entry key="..\:/Users/Sana-Mohsin/AndroidStudioProjects/FindMeaning/app/src/main/res/layout/phonetic_list_items.xml" value="0.2" />
         <entry key="..\:/Users/Sana-Mohsin/AndroidStudioProjects/FindMeaning/app/src/main/res/layout/pop_delete.xml" value="0.11458333333333333" />
         <entry key="..\:/Users/Sana-Mohsin/AndroidStudioProjects/FindMeaning/app/src/main/res/layout/suggestions_list_items.xml" value="0.2398286937901499" />

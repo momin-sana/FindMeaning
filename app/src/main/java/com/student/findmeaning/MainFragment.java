@@ -49,11 +49,7 @@ public class MainFragment extends Fragment {
                 AlertDialog dialog = builder.create();
                 dialog.show();
 
-                positiveButton.setOnClickListener(v -> {
-                    TransitionInflater inflater1 = TransitionInflater.from(requireActivity());
-                    setExitTransition(inflater1.inflateTransition(R.transition.fade));
-                    System.exit(0);
-                });
+                positiveButton.setOnClickListener(v -> System.exit(0));
                 negativeButton.setOnClickListener(v -> dialog.dismiss());
             }
         });
@@ -110,11 +106,7 @@ public class MainFragment extends Fragment {
             AlertDialog dialog = builder.create();
             dialog.show();
 
-            positiveButton.setOnClickListener(v -> {
-                TransitionInflater inflater1 = TransitionInflater.from(requireActivity());
-                setExitTransition(inflater1.inflateTransition(R.transition.fade));
-                System.exit(0);
-            });
+            positiveButton.setOnClickListener(v -> System.exit(0));
             negativeButton.setOnClickListener(v -> dialog.dismiss());
 
             }

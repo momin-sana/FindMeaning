@@ -79,10 +79,13 @@ public class Bookmark extends AppCompatActivity implements OnBookmarkItemClickLi
                     int itemId = item.getItemId();
                     if (itemId == R.id.menu_delete_all){
                         dbHandler.deleteBookmark();
+                        bookmarkModelArrayList.clear();
                         bookmarkAdapter.setDataChangedBookmark(bookmarkModelArrayList);
+
+                        Toast.makeText(this, R.string.all_bookmark_deleted, Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                         startActivity(intent);
-                        Toast.makeText(this, R.string.all_bookmark_deleted, Toast.LENGTH_SHORT).show();
+
                         return true;
                     }
                     return false;

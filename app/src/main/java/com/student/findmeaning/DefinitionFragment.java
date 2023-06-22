@@ -69,6 +69,7 @@ public class DefinitionFragment extends Fragment {
         arguments.putString("query", queryOrBookmarkedrHistory);
         arguments.putString("bookmarkQuery",queryOrBookmarkedrHistory);
         arguments.putString("historyQuery", queryOrBookmarkedrHistory);
+        arguments.putString("notesQuery", queryOrBookmarkedrHistory);
         definitionFragment.setArguments(arguments);
         return definitionFragment;
     }
@@ -149,6 +150,10 @@ public class DefinitionFragment extends Fragment {
             }
             if (bundle.containsKey("historyQuery")){
                 String word = bundle.getString("historyQuery");
+                word_text.setText(word);
+            }
+            if (bundle.containsKey("notesQuery")){
+                String word = bundle.getString("notesQuery");
                 word_text.setText(word);
             }
         }
