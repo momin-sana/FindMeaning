@@ -85,17 +85,6 @@ public class MainFragment extends Fragment {
             startActivity(intent);
         });
 
-//        exit.setOnClickListener(view12 -> new AlertDialog.Builder(requireContext())
-//                .setTitle("Exit App")
-//                .setPositiveButton("Yes", (dialogInterface, i) -> {
-//                    TransitionInflater inflater1 = TransitionInflater.from(requireActivity());
-//                    setExitTransition(inflater1.inflateTransition(R.transition.fade));
-//                    System.exit(0);
-//                })
-//                .setNegativeButton("Cancel", (dialogInterface, i) -> dialogInterface.dismiss())
-//                .show()
-//        );
-
         exit.setOnClickListener(view12 -> {
             View customLayout = LayoutInflater.from(requireActivity()).inflate(R.layout.custom_alert_dialog, null);
             Button positiveButton = customLayout.findViewById(R.id.positive_button);
