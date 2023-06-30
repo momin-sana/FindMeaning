@@ -121,7 +121,6 @@ public class DefinitionFragment extends Fragment {
         //If you want to use the AppBarLayout defined in the activity layout, you should use getActivity().findViewById(R.id.app_bar_layout) instead.
         appBarLayout = requireActivity().findViewById(R.id.app_bar_layout);
         toolbar = requireActivity().findViewById(R.id.toolbar);
-//        meaning_recyclerView.addOnScrollListener(scrollListener);
 
         return view;
     }
@@ -171,48 +170,6 @@ public class DefinitionFragment extends Fragment {
             return false;
         });
     }
-
-//    private final RecyclerView.OnScrollListener scrollListener = (new RecyclerView.OnScrollListener() {
-//        int scrollDist = 0;
-//        private static final int SHOW_THRESHOLD = 20;
-//
-//        @Override
-//        public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-//            super.onScrolled(recyclerView, dx, dy);
-//            // Calculate the scroll distance
-//            scrollDist += dy;
-//            // Check if the user has scrolled enough to hide/show the toolbar
-//            if (appBarLayout.getVisibility() == View.VISIBLE && scrollDist > SHOW_THRESHOLD) {
-//                // Hide the toolbar
-//                animateToolbar(false);
-//                appBarLayout.setVisibility(View.GONE);
-//                phonetic_recyclerView.setVisibility(View.GONE);
-//                scrollDist = 0;
-//            } else if (scrollDist < SHOW_THRESHOLD && appBarLayout.getVisibility() != View.VISIBLE) {
-//                // Show the toolbar
-//                animateToolbar(true);
-//                appBarLayout.setVisibility(View.VISIBLE);
-//                phonetic_recyclerView.setVisibility(View.VISIBLE);
-//                scrollDist = 0;
-//            }
-//        }
-//    });
-
-    // Method to animate the toolbar hide/show
-//    private void animateToolbar(boolean show) {
-//        if (show) {
-//            appBarLayout.animate()
-//                    .translationY(0)
-//                    .setInterpolator(new DecelerateInterpolator(2))
-//                    .start();
-//        } else {
-//            int toolbarHeight = toolbar.getHeight();
-//            appBarLayout.animate()
-//                    .translationY(-toolbarHeight)
-//                    .setInterpolator(new AccelerateInterpolator(2))
-//                    .start();
-//        }
-//    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {super.onCreate(savedInstanceState);}
@@ -308,10 +265,4 @@ public class DefinitionFragment extends Fragment {
         }
     }
 
-//   @Override
-//   public void onDestroy() {
-//        super.onDestroy();
-//// Remove the OnScrollListener from the RecyclerView
-//       meaning_recyclerView.removeOnScrollListener(scrollListener);
-//   }
 }
