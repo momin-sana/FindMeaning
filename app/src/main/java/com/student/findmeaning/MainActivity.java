@@ -97,7 +97,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         if (historyQuery != null && !historyQuery.isEmpty()){
             searchView.setQuery(historyQuery, true);
-//            searchView.clearFocus();
             setSearchFromHistory();
         }
         if (extras != null && extras.containsKey("notesQuery")){
@@ -109,7 +108,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         if (notesQuery != null && !notesQuery.isEmpty()){
             searchView.setQuery(notesQuery, true);
-//            searchView.clearFocus();
             setSearchFromNotes();
         }
         else{
