@@ -2,6 +2,7 @@
 ### Android Application- *Java*
 
 ![displayPic](https://github.com/momin-sana/FindMeaning/assets/92250920/449d73fa-2073-4029-abf4-99ce0f1d9832)
+[Download APK](app/apk/debug)
 
 FindMeaning is a dictionary app that uses Retrofit to fetch data from an API (`https://dictionaryapi.dev/`) and display it in a RecyclerListView. The data includes a list of phonetics with audio. Here words can be bookmarked and the history of searched words will be stored in Database. An Internet connection is mandatory to access the meaning of words.
 
@@ -14,7 +15,7 @@ FindMeaning is a dictionary app that uses Retrofit to fetch data from an API (`h
 * RecyclerListView: allows users to scroll through a list of words and their meanings easily
 * FragmentTransaction: Multiple fragments are used, i.e. MainFragment, DefinitionFragment, and BottomFragment.
 * Model class, Adapters: These are used in corresponding with Database and RecylcerView
-* Database: Two databases are used, to store word and other for notes.
+* Database: Two databases are used, one to store Word and the other for notes.
 
 ### How to use:
 1. Clone this repository to your local machine
