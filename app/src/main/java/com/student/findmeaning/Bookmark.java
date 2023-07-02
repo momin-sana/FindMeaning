@@ -85,7 +85,7 @@ public class Bookmark extends AppCompatActivity implements OnBookmarkItemClickLi
                         Toast.makeText(this, R.string.all_bookmark_deleted, Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                         startActivity(intent);
-
+                        finish();
                         return true;
                     }
                     return false;

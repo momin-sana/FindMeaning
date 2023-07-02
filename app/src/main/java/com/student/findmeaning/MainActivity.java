@@ -291,7 +291,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             AlertDialog dialog = builder.create();
             dialog.show();
 
-            positiveButton.setOnClickListener(v -> System.exit(0));
+            positiveButton.setOnClickListener(v -> {
+                finishAffinity();
+                System.exit(0);
+            });
             negativeButton.setOnClickListener(v -> dialog.dismiss());
         }
         drawerLayout.closeDrawer(GravityCompat.START);

@@ -49,7 +49,10 @@ public class MainFragment extends Fragment {
                 AlertDialog dialog = builder.create();
                 dialog.show();
 
-                positiveButton.setOnClickListener(v -> System.exit(0));
+                positiveButton.setOnClickListener(v -> {
+                    dialog.dismiss();
+                    requireActivity().finishAffinity();
+                });
                 negativeButton.setOnClickListener(v -> dialog.dismiss());
             }
         });
@@ -95,7 +98,10 @@ public class MainFragment extends Fragment {
             AlertDialog dialog = builder.create();
             dialog.show();
 
-            positiveButton.setOnClickListener(v -> System.exit(0));
+            positiveButton.setOnClickListener(v -> {
+                dialog.dismiss();
+                requireActivity().finishAffinity();
+            });
             negativeButton.setOnClickListener(v -> dialog.dismiss());
 
             }

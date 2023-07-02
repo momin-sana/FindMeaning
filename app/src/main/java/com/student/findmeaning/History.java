@@ -76,6 +76,7 @@ public class History extends AppCompatActivity implements OnBookmarkItemClickLis
                         historyAdapter.setDataChangedHistory(historyArrayList);
                         Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                         startActivity(intent);
+                        finish();
                         Toast.makeText(this, R.string.history_cleared, Toast.LENGTH_SHORT).show();
                         return true;
                     }

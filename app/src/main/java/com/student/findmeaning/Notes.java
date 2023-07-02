@@ -115,6 +115,7 @@ public class Notes extends AppCompatActivity implements OnBookmarkItemClickListe
         Intent intent = new Intent(Notes.this, MainActivity.class);
         intent.putExtra("notesQuery", wordFromBookmarkOrHistory);
         startActivity(intent);
+        finish();
     }
 
 //    to update the list when data is added or edited --
